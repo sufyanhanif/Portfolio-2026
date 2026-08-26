@@ -9,7 +9,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Background aktif jika scroll lebih dari 20px
       if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
@@ -28,10 +27,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 border-b transition-colors duration-500 ease-in-out ${
         isScrolled
-          ? 'bg-black/50 backdrop-blur-md border-b border-white/5 py-4 shadow-lg'
-          : 'bg-transparent py-6'
+          ? 'bg-black/60 backdrop-blur-md border-white/10 py-4 shadow-lg shadow-black/20'
+          : 'bg-black/0 backdrop-blur-none border-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between md:justify-center items-center px-6 md:px-0">
@@ -84,9 +83,9 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* Dropdown Menu Khusus Mobile */}
+      {/* Dropdown Menu Mobile */}
       <div
-        className={`absolute top-full left-0 w-full bg-black/90 backdrop-blur-lg border-b border-neutral-800 transition-all duration-300 ease-in-out md:hidden ${
+        className={`absolute top-full left-0 w-full bg-black/95 backdrop-blur-lg border-b border-neutral-800 transition-all duration-300 ease-in-out md:hidden ${
           isOpen
             ? 'opacity-100 visible translate-y-0'
             : 'opacity-0 invisible -translate-y-4 pointer-events-none'
