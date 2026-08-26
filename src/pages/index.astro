@@ -10,8 +10,8 @@ import HeroSection from '../components/sections/HeroSection.jsx';
 ---
 
 <Layout>
-	<main class="min-h-screen bg-black text-white flex flex-col justify-between items-center px-6 pb-12 selection:bg-fuchsia-500 selection:text-white">
-		<Navbar client:load />
-		<HeroSection client:load />
-	</main>
+  <main class="relative w-full h-screen h-[100dvh] bg-black text-white selection:bg-fuchsia-500 selection:text-white overflow-hidden">
+    <Navbar client:load />
+    <HeroSection client:load />
+  </main>
 </Layout>
