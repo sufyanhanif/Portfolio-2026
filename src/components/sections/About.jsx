@@ -44,7 +44,7 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // 2. Logika Efek Senter Desktop (Mouse Follower)
+  // 2. Logika Efek Senter Desktop
   useEffect(() => {
     const card = cardRef.current;
     const mask = maskRef.current;
@@ -74,31 +74,27 @@ export default function About() {
     };
   }, []);
 
-  // 3. Logika Sentuh Mobile (Lingkaran Membesar + Auto Shrink 30 Detik)
+  // 3. Logika Sentuh Mobile
   const handleMobileTouch = (e) => {
     const mask = mobileMaskRef.current;
     if (!mask) return;
 
-    // Ambil koordinat titik sentuhan
     const rect = mask.getBoundingClientRect();
     const touch = e.touches ? e.touches[0] : e;
     const x = touch.clientX - rect.left;
     const y = touch.clientY - rect.top;
 
-    // Reset timer & animasi sebelumnya jika ada
     if (mobileTimerRef.current) clearTimeout(mobileTimerRef.current);
     if (mobileAnimRef.current) cancelAnimationFrame(mobileAnimRef.current);
 
-    const targetRadius = 350; // Radius meluas sampai menutup seluruh foto
+    const targetRadius = 350;
     let currentRadius = 0;
-    const duration = 600; // Durasi melebar (0.6 detik)
+    const duration = 600;
     const startTime = performance.now();
 
-    // Animasi Lingkaran Membesar (Expand)
     const animateExpand = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic formula
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       currentRadius = targetRadius * easeProgress;
 
@@ -107,22 +103,20 @@ export default function About() {
       if (progress < 1) {
         mobileAnimRef.current = requestAnimationFrame(animateExpand);
       } else {
-        // Setelah penuh, atur timer delay 30 detik untuk mengecilkan kembali
         mobileTimerRef.current = setTimeout(() => {
           animateShrink(x, y);
-        }, 30000); // 30.000 ms = 30 detik
+        }, 30000);
       }
     };
 
-    // Animasi Lingkaran Mengecil (Shrink Smooth)
     const animateShrink = (startX, startY) => {
-      const shrinkDuration = 800; // Durasi kembalinya 0.8 detik
+      const shrinkDuration = 800;
       const shrinkStartTime = performance.now();
 
       const shrinkStep = (now) => {
         const elapsed = now - shrinkStartTime;
         const progress = Math.min(elapsed / shrinkDuration, 1);
-        const easeProgress = Math.pow(progress, 3); // Ease-in
+        const easeProgress = Math.pow(progress, 3);
         const radius = targetRadius * (1 - easeProgress);
 
         mask.style.clipPath = `circle(${radius}px at ${startX}px ${startY}px)`;
@@ -146,12 +140,12 @@ export default function About() {
       id="about-me"
       className="relative w-full min-h-screen bg-black text-white p-5 sm:p-8 md:p-12 flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 items-center justify-center overflow-hidden pt-24 lg:pt-16 pb-12"
     >
-      {/* EFEK GLOW UNGU DI POJOK KANAN ATAS */}
+      {/* GLOW UNGU */}
       <div 
         className="absolute -top-16 -right-16 sm:-top-40 sm:-right-36 w-64 sm:w-[500px] md:w-[650px] h-64 sm:h-[500px] md:h-[650px] bg-[#6b0870]/40 sm:bg-[#7b008b]/35 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none z-0" 
       />
 
-      {/* KOLOM BENTO GRID (KARTU KIRI/BAWAH) */}
+      {/* BENTO GRID */}
       <div className="w-full lg:w-1/2 flex flex-col gap-4 max-w-xl z-10">
         
         {/* Profil Brief */}
@@ -169,8 +163,6 @@ export default function About() {
 
         {/* Grid Tengah: Education & Career */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          
-          {/* Education */}
           <div 
             className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[300ms] lg:delay-[150ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -185,7 +177,6 @@ export default function About() {
             <p className="text-[10px] sm:text-xs text-zinc-400">Grade: 3.87/4.00</p>
           </div>
 
-          {/* Career */}
           <div 
             className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[450ms] lg:delay-[300ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -206,8 +197,6 @@ export default function About() {
 
         {/* Grid Bawah: Achievement & My Stacks */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          
-          {/* Achievement */}
           <div 
             className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[600ms] lg:delay-[450ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -220,7 +209,6 @@ export default function About() {
             <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">Video Competition</p>
           </div>
 
-          {/* My Stacks */}
           <div 
             className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center relative backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[750ms] lg:delay-[600ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -230,10 +218,8 @@ export default function About() {
               <span>🛠 My Stacks</span>
             </div>
 
-            {/* Marquee Track */}
             <div className="relative w-full overflow-hidden pt-5 pb-0.5">
               <div className="flex gap-2 sm:gap-3 animate-marquee w-max hover:[animation-play-state:paused]">
-                {/* Loop 1 */}
                 {stacks.map((item, index) => (
                   <div key={`stack-1-${index}`} className="relative group/stack flex flex-col items-center">
                     <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
@@ -247,7 +233,6 @@ export default function About() {
                   </div>
                 ))}
 
-                {/* Loop 2 */}
                 {stacks.map((item, index) => (
                   <div key={`stack-2-${index}`} className="relative group/stack flex flex-col items-center">
                     <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
@@ -268,24 +253,59 @@ export default function About() {
 
       {/* KOLOM FOTO PROFIL */}
       <div 
-        className={`w-full lg:w-1/2 flex justify-center z-10 mb-2 sm:mb-4 lg:mb-0 transition-all duration-700 ease-out transform delay-[0ms] lg:delay-[750ms] ${
+        className={`w-full lg:w-1/2 flex justify-center relative z-10 mb-2 sm:mb-4 lg:mb-0 transition-all duration-700 ease-out transform delay-[0ms] lg:delay-[750ms] ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}
       >
-        {/* TAMPILAN KHUSUS MOBILE: EFEK SENTUH (mobile.png -> mobileOn.png) */}
+        {/* ========================================================
+            PANAH MELENGKUNG & TEKS PANDUAN (DESKTOP & MOBILE)
+           ======================================================== */}
+        
+        {/* 1. Panduan Khusus MOBILE (Pojok Kanan Foto) */}
+        <div className="flex lg:hidden absolute -bottom-9 left-1/2 -translate-x-1/2 flex-col items-center pointer-events-none z-20 animate-bounce-slow">
+            {/* Panah Menunjuk ke Atas */}
+            <svg className="w-4 h-4 text-fuchsia-400 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" strokeDasharray="3 3" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            
+            {/* Teks Panduan */}
+            <span className="text-[10px] font-mono tracking-wide text-fuchsia-300 bg-zinc-900/90 px-2.5 py-0.5 rounded-full border border-fuchsia-500/30 shadow-md whitespace-nowrap">
+                Tap to illuminate ✨
+            </span>
+            </div>
+
+        {/* 2. Panduan Khusus DESKTOP (Samping Kiri Foto dengan Panah Melengkung Dash) */}
+        <div className="hidden lg:flex absolute top-12 -right-16 flex-col items-start pointer-events-none z-20 animate-pulse">
+            <span className="text-xs font-mono text-fuchsia-300 bg-zinc-900/90 px-2.5 py-1 rounded-full border border-fuchsia-500/30 shadow-lg whitespace-nowrap">
+                Hover to illuminate 💡
+            </span>
+            
+            {/* Panah Melengkung Dash ke arah kiri foto */}
+            <svg className="w-12 h-12 text-fuchsia-400 -mt-1 ml-2 transform -scale-x-100" viewBox="0 0 50 50" fill="none">
+                <path
+                d="M 10 10 Q 35 15 35 35"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="4 3"
+                strokeLinecap="round"
+                />
+                <polygon points="30,30 38,38 38,28" fill="currentColor" />
+            </svg>
+            </div>
+
+
+        {/* TAMPILAN MOBILE: Efek Sentuh */}
         <div 
           onTouchStart={handleMobileTouch}
           onClick={handleMobileTouch}
           className="block lg:hidden relative w-full max-w-[200px] xs:max-w-[220px] h-[240px] xs:h-[260px] cursor-pointer select-none rounded-2xl overflow-hidden shadow-lg"
         >
-          {/* Layer 1: Gambar Utama Mobile (mobile.png) */}
           <img
             src="/images/mobile.png"
             alt="Sufyan - Mobile Version"
             className="w-full h-full object-cover rounded-2xl"
           />
 
-          {/* Layer 2: Gambar Berwarna saat Disentuh (mobileOn.png) */}
           <div
             ref={mobileMaskRef}
             className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl"
@@ -300,19 +320,17 @@ export default function About() {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none rounded-b-2xl" />
         </div>
 
-        {/* TAMPILAN KHUSUS DESKTOP (lg:flex): Efek Hover Senter (abu.png + on.png) */}
+        {/* TAMPILAN DESKTOP: Efek Hover Senter */}
         <div
           ref={cardRef}
           className="hidden lg:block relative w-full max-w-[400px] h-[480px] cursor-pointer select-none group"
         >
-          {/* Layer 1: Gambar Hitam Putih (abu.png) */}
           <img
             src="/images/abu.png"
             alt="Sufyan - Grayscale"
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
 
-          {/* Layer 2: Gambar Berwarna (on.png) */}
           <div
             ref={maskRef}
             className="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
@@ -324,7 +342,6 @@ export default function About() {
             }}
           />
 
-          {/* Layer 3: Gradient Fade-to-Black di Bawah Foto */}
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
         </div>
       </div>
