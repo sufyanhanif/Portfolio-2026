@@ -3,10 +3,10 @@ import React from 'react';
 export default function HeroSection() {
   // Array data media sosial
   const socialLinks = [
-    { name: 'GitHub', icon: '/icons/github.svg', url: 'https://github.com/username' },
-    { name: 'LinkedIn', icon: '/icons/linkedin.svg', url: 'https://linkedin.com/in/username' },
-    { name: 'Behance', icon: '/icons/behance.svg', url: 'https://behance.net/username' },
-    { name: 'Instagram', icon: '/icons/instagram.svg', url: 'https://instagram.com/username' },
+    { name: 'GitHub', icon: '/icons/github.svg', url: 'https://github.com/sufyanhanif/' },
+    { name: 'LinkedIn', icon: '/icons/linkedin.svg', url: 'https://www.linkedin.com/in/sufyan48/' },
+    { name: 'Behance', icon: '/icons/behance.svg', url: 'https://www.behance.net/sufyanhanif1' },
+    { name: 'Instagram', icon: '/icons/instagram.svg', url: 'https://www.instagram.com/sufyan_ha/' },
   ];
 
   const handleScrollToAbout = (e) => {
