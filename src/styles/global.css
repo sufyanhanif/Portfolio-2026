@@ -31,7 +31,13 @@
   }
 }
 
-/* 2. Utility Classes untuk Komponen */
+/* --- PENAMBAHAN: Keyframe Marquee untuk My Stacks --- */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 2. Utility Classes */
 .animate-lamp-glow {
   animation: lampGlow 2.5s ease-in-out infinite;
 }
@@ -44,6 +50,36 @@
   animation: bounce 2s infinite;
 }
 
+/* --- PENAMBAHAN: Class Marquee Global --- */
+.animate-marquee {
+  animation: marquee 12s linear infinite;
+}
+
+/* 3. Pengaturan Smooth Scroll & Offset Navbar Header */
 html {
   scroll-behavior: smooth;
+  /* PENAMBAHAN: Memberi jarak offset otomatis saat klik link navbar agar judul section tidak tertutup navbar fixed */
+  scroll-padding-top: 80px; 
+}
+
+/* 4. PENAMBAHAN: Sembunyikan Scrollbar Bawaan (Agar Tampilan Lebih Elegan & Modern) */
+body {
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden; /* Mencegah geser kanan-kiri tak disengaja */
+}
+
+/* Kustomisasi Scrollbar Khas Portofolio Dark Mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b; /* zinc-950 */
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a; /* zinc-800 */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d946ef; /* fuchsia-500 */
 }
