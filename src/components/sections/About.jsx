@@ -4,6 +4,12 @@ export default function About() {
   const cardRef = useRef(null);
   const maskRef = useRef(null);
   const sectionRef = useRef(null);
+  
+  // Ref khusus untuk elemen gambar Mobile
+  const mobileMaskRef = useRef(null);
+  const mobileTimerRef = useRef(null);
+  const mobileAnimRef = useRef(null);
+
   const [isVisible, setIsVisible] = useState(false);
 
   // Array ikon My Stacks
@@ -18,7 +24,6 @@ export default function About() {
     { name: 'Framer', icon: '/stacks/framer.svg' },
   ];
 
-  // Class Hover Reusable
   const cardHoverStyle = "hover:scale-[1.02] hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] cursor-default";
 
   // 1. Intersection Observer untuk Scroll Reveal Trigger
@@ -39,7 +44,7 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // 2. Logika Efek Senter Sederhana (Berjalan di Desktop)
+  // 2. Logika Efek Senter Desktop (Mouse Follower)
   useEffect(() => {
     const card = cardRef.current;
     const mask = maskRef.current;
@@ -68,6 +73,72 @@ export default function About() {
       card.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
+
+  // 3. Logika Sentuh Mobile (Lingkaran Membesar + Auto Shrink 30 Detik)
+  const handleMobileTouch = (e) => {
+    const mask = mobileMaskRef.current;
+    if (!mask) return;
+
+    // Ambil koordinat titik sentuhan
+    const rect = mask.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    // Reset timer & animasi sebelumnya jika ada
+    if (mobileTimerRef.current) clearTimeout(mobileTimerRef.current);
+    if (mobileAnimRef.current) cancelAnimationFrame(mobileAnimRef.current);
+
+    const targetRadius = 350; // Radius meluas sampai menutup seluruh foto
+    let currentRadius = 0;
+    const duration = 600; // Durasi melebar (0.6 detik)
+    const startTime = performance.now();
+
+    // Animasi Lingkaran Membesar (Expand)
+    const animateExpand = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic formula
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      currentRadius = targetRadius * easeProgress;
+
+      mask.style.clipPath = `circle(${currentRadius}px at ${x}px ${y}px)`;
+
+      if (progress < 1) {
+        mobileAnimRef.current = requestAnimationFrame(animateExpand);
+      } else {
+        // Setelah penuh, atur timer delay 30 detik untuk mengecilkan kembali
+        mobileTimerRef.current = setTimeout(() => {
+          animateShrink(x, y);
+        }, 30000); // 30.000 ms = 30 detik
+      }
+    };
+
+    // Animasi Lingkaran Mengecil (Shrink Smooth)
+    const animateShrink = (startX, startY) => {
+      const shrinkDuration = 800; // Durasi kembalinya 0.8 detik
+      const shrinkStartTime = performance.now();
+
+      const shrinkStep = (now) => {
+        const elapsed = now - shrinkStartTime;
+        const progress = Math.min(elapsed / shrinkDuration, 1);
+        const easeProgress = Math.pow(progress, 3); // Ease-in
+        const radius = targetRadius * (1 - easeProgress);
+
+        mask.style.clipPath = `circle(${radius}px at ${startX}px ${startY}px)`;
+
+        if (progress < 1) {
+          mobileAnimRef.current = requestAnimationFrame(shrinkStep);
+        } else {
+          mask.style.clipPath = `circle(0px at 0px 0px)`;
+        }
+      };
+
+      mobileAnimRef.current = requestAnimationFrame(shrinkStep);
+    };
+
+    mobileAnimRef.current = requestAnimationFrame(animateExpand);
+  };
 
   return (
     <section
@@ -201,17 +272,35 @@ export default function About() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}
       >
-        {/* TAMPILAN KHUSUS MOBILE: Memakai /images/mobile.png (Ukuran Kecil Ringkas) */}
-        <div className="block lg:hidden relative w-full max-w-[200px] xs:max-w-[220px] h-[240px] xs:h-[260px] cursor-pointer select-none">
+        {/* TAMPILAN KHUSUS MOBILE: EFEK SENTUH (mobile.png -> mobileOn.png) */}
+        <div 
+          onTouchStart={handleMobileTouch}
+          onClick={handleMobileTouch}
+          className="block lg:hidden relative w-full max-w-[200px] xs:max-w-[220px] h-[240px] xs:h-[260px] cursor-pointer select-none rounded-2xl overflow-hidden shadow-lg"
+        >
+          {/* Layer 1: Gambar Utama Mobile (mobile.png) */}
           <img
             src="/images/mobile.png"
             alt="Sufyan - Mobile Version"
-            className="w-full h-full object-cover rounded-2xl shadow-lg border border-zinc-800/80"
+            className="w-full h-full object-cover rounded-2xl"
           />
+
+          {/* Layer 2: Gambar Berwarna saat Disentuh (mobileOn.png) */}
+          <div
+            ref={mobileMaskRef}
+            className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl"
+            style={{
+              backgroundImage: "url('/images/mobileOn.png')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              clipPath: 'circle(0px at 0px 0px)',
+            }}
+          />
+
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none rounded-b-2xl" />
         </div>
 
-        {/* TAMPILAN KHUSUS DESKTOP (lg:flex): Efek Senter (abu.png + on.png) */}
+        {/* TAMPILAN KHUSUS DESKTOP (lg:flex): Efek Hover Senter (abu.png + on.png) */}
         <div
           ref={cardRef}
           className="hidden lg:block relative w-full max-w-[400px] h-[480px] cursor-pointer select-none group"
