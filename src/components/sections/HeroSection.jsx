@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative flex flex-col items-center justify-center min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 animate-page-fade-in overflow-hidden">
+    <section id="home" className="relative flex flex-col items-center justify-between h-full w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 animate-page-fade-in overflow-hidden">
       
       {/* --- GLOW UNGU KIRI ATAS --- */}
       <div 
