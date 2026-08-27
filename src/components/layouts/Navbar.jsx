@@ -4,42 +4,112 @@ export default function Navbar() {
   const [activeTab, setActiveTab] = useState('Home');
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   const navItems = ['Home', 'About Me', 'My Project', 'Certificate', 'Contact'];
 
+  // 1. Deteksi Scroll (Show/Hide Navbar)
   useEffect(() => {
+    let lastScrollY = 0;
+    const mainEl = document.querySelector('main');
+
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      const currentScrollY = mainEl ? mainEl.scrollTop : window.scrollY;
+
+      if (currentScrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const target = mainEl || window;
+    target.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      target.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const handleNavClick = (item) => {
+  // 2. IntersectionObserver untuk Aktif Tab Otomatis
+  useEffect(() => {
+    const sectionMap = [
+      { id: 'home', name: 'Home' },
+      { id: 'about-me', name: 'About Me' },
+      { id: 'my-project', name: 'My Project' },
+      { id: 'certificate', name: 'Certificate' },
+      { id: 'contact', name: 'Contact' },
+    ];
+
+    const mainEl = document.querySelector('main');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const matched = sectionMap.find((s) => s.id === entry.target.id);
+            if (matched) {
+              setActiveTab(matched.name);
+            }
+          }
+        });
+      },
+      {
+        root: mainEl || null,
+        threshold: 0.4,
+      }
+    );
+
+    sectionMap.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Handler Klik dengan Smooth Scroll kustom
+  const handleNavClick = (e, item) => {
+    e.preventDefault(); // Mencegah lompatan URL Hash instan
     setActiveTab(item);
     setIsOpen(false);
+
+    const targetId = item.toLowerCase().replace(/\s+/g, '-');
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 border-b transition-colors duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      } ${
         isScrolled
-          ? 'bg-black/60 backdrop-blur-md border-white/10 py-4 shadow-lg shadow-black/20'
-          : 'bg-black/0 backdrop-blur-none border-transparent py-6'
+          ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4 shadow-lg shadow-black/40'
+          : 'bg-transparent border-b border-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between md:justify-center items-center px-6 md:px-0">
-        {/* Brand Title Kecil Khusus Mobile */}
         <span className="text-sm font-semibold tracking-widest text-neutral-400 md:hidden">
           PORTFOLIO
         </span>
 
-        {/* Tombol Hamburger Mobile */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Menu"
@@ -68,14 +138,17 @@ export default function Navbar() {
               <li key={item}>
                 <a
                   href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={() => setActiveTab(item)}
-                  className={`text-sm lg:text-base font-medium transition-colors duration-300 ${
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`relative text-sm lg:text-base font-medium transition-colors duration-300 ${
                     isActive
                       ? 'text-white font-semibold'
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
                   {item}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-fuchsia-500 rounded-full transition-all duration-300" />
+                  )}
                 </a>
               </li>
             );
@@ -98,14 +171,17 @@ export default function Navbar() {
               <li key={item}>
                 <a
                   href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={() => handleNavClick(item)}
-                  className={`text-base font-medium transition-colors duration-300 ${
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`relative text-base font-medium transition-colors duration-300 ${
                     isActive
                       ? 'text-white font-semibold'
                       : 'text-neutral-400 hover:text-white'
                   }`}
                 >
                   {item}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-fuchsia-500 rounded-full transition-all duration-300" />
+                  )}
                 </a>
               </li>
             );

@@ -4,14 +4,14 @@ import Layout from '../layouts/Layout.astro';
 import "../styles/global.css";
 import Navbar from '../components/layouts/Navbar.jsx';
 import HeroSection from '../components/sections/HeroSection.jsx';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import About from '../components/sections/About.jsx';
 ---
 
 <Layout>
-  <main class="relative w-full h-screen h-[100dvh] bg-black text-white selection:bg-fuchsia-500 selection:text-white overflow-hidden">
+  <!-- TAMBAHKAN h-screen overflow-y-scroll snap-y snap-mandatory DI SINI -->
+  <main class="relative w-full h-screen overflow-y-scroll overflow-x-hidden snap-y snap-mandatory bg-black text-white selection:bg-fuchsia-500 selection:text-white">
     <Navbar client:load />
     <HeroSection client:load />
+    <About client:load />
   </main>
 </Layout>
