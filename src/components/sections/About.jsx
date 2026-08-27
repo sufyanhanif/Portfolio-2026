@@ -21,7 +21,7 @@ export default function About() {
   // Class Hover Reusable
   const cardHoverStyle = "hover:scale-[1.02] hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] cursor-default";
 
-  // 1. Intersection Observer untuk Scroll Reveal
+  // 1. Intersection Observer untuk Scroll Reveal Trigger
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -39,7 +39,7 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // 2. Logika Efek Senter Sederhana
+  // 2. Logika Efek Senter Sederhana (Berjalan di Desktop)
   useEffect(() => {
     const card = cardRef.current;
     const mask = maskRef.current;
@@ -73,20 +73,20 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about-me"
-      className="relative w-full min-h-screen bg-black text-white p-4 sm:p-6 md:p-12 flex flex-col-reverse lg:flex-row gap-6 lg:gap-12 items-center justify-center overflow-hidden pt-20 lg:pt-12"
+      className="relative w-full min-h-screen bg-black text-white p-5 sm:p-8 md:p-12 flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 items-center justify-center overflow-hidden pt-24 lg:pt-16 pb-12"
     >
       {/* EFEK GLOW UNGU DI POJOK KANAN ATAS */}
       <div 
         className="absolute -top-16 -right-16 sm:-top-40 sm:-right-36 w-64 sm:w-[500px] md:w-[650px] h-64 sm:h-[500px] md:h-[650px] bg-[#6b0870]/40 sm:bg-[#7b008b]/35 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none z-0" 
       />
 
-      {/* KOLOM BENTO GRID (BAWAH PADA MOBILE) */}
-      <div className="w-full lg:w-1/2 flex flex-col gap-3 sm:gap-4 max-w-xl z-10">
+      {/* KOLOM BENTO GRID (KARTU KIRI/BAWAH) */}
+      <div className="w-full lg:w-1/2 flex flex-col gap-4 max-w-xl z-10">
         
-        {/* 1. Profil Brief */}
+        {/* Profil Brief */}
         <div 
-          className={`bg-zinc-900/80 p-4 sm:p-6 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-500 ease-out transform ${cardHoverStyle} ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+          className={`bg-zinc-900/80 p-4 sm:p-6 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[150ms] lg:delay-[0ms] ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <h1 className="text-lg sm:text-2xl font-bold text-fuchsia-500 mb-0.5 sm:mb-1">Sufyan Hanif Ariyana</h1>
@@ -96,14 +96,13 @@ export default function About() {
           </p>
         </div>
 
-        {/* Grid Tengah: Education & Career (Tetap 2 Kolom di Mobile) */}
+        {/* Grid Tengah: Education & Career */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           
-          {/* 2. Education (Di Mobile langsung muncul, di Desktop ada delay) */}
+          {/* Education */}
           <div 
-            style={{ transitionDelay: '0ms' }}
-            className={`bg-zinc-900/80 p-3 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-500 lg:delay-200 ease-out transform ${cardHoverStyle} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[300ms] lg:delay-[150ms] ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
             <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
@@ -115,11 +114,10 @@ export default function About() {
             <p className="text-[10px] sm:text-xs text-zinc-400">Grade: 3.87/4.00</p>
           </div>
 
-          {/* 3. Career */}
+          {/* Career */}
           <div 
-            style={{ transitionDelay: '0ms' }}
-            className={`bg-zinc-900/80 p-3 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-500 lg:delay-300 ease-out transform ${cardHoverStyle} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[450ms] lg:delay-[300ms] ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
             <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
@@ -135,14 +133,13 @@ export default function About() {
           </div>
         </div>
 
-        {/* Grid Bawah: Achievement & My Stacks (Tetap 2 Kolom di Mobile) */}
+        {/* Grid Bawah: Achievement & My Stacks */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           
-          {/* 4. Achievement */}
+          {/* Achievement */}
           <div 
-            style={{ transitionDelay: '0ms' }}
-            className={`bg-zinc-900/80 p-3 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center backdrop-blur-sm transition-all duration-500 lg:delay-400 ease-out transform ${cardHoverStyle} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[600ms] lg:delay-[450ms] ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
             <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
@@ -152,11 +149,10 @@ export default function About() {
             <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">Video Competition</p>
           </div>
 
-          {/* 5. My Stacks */}
+          {/* My Stacks */}
           <div 
-            style={{ transitionDelay: '0ms' }}
-            className={`bg-zinc-900/80 p-3 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center relative backdrop-blur-sm transition-all duration-500 lg:delay-500 ease-out transform ${cardHoverStyle} ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center relative backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[750ms] lg:delay-[600ms] ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
             <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1 text-[11px] sm:text-sm">
@@ -199,15 +195,26 @@ export default function About() {
         </div>
       </div>
 
-      {/* KOLOM FOTO PROFIL (ATAS PADA MOBILE) */}
+      {/* KOLOM FOTO PROFIL */}
       <div 
-        className={`w-full lg:w-1/2 flex justify-center z-10 transition-all duration-500 ease-out transform ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 lg:translate-y-12'
+        className={`w-full lg:w-1/2 flex justify-center z-10 mb-2 sm:mb-4 lg:mb-0 transition-all duration-700 ease-out transform delay-[0ms] lg:delay-[750ms] ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}
       >
+        {/* TAMPILAN KHUSUS MOBILE: Memakai /images/mobile.png (Ukuran Kecil Ringkas) */}
+        <div className="block lg:hidden relative w-full max-w-[200px] xs:max-w-[220px] h-[240px] xs:h-[260px] cursor-pointer select-none">
+          <img
+            src="/images/mobile.png"
+            alt="Sufyan - Mobile Version"
+            className="w-full h-full object-cover rounded-2xl shadow-lg border border-zinc-800/80"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none rounded-b-2xl" />
+        </div>
+
+        {/* TAMPILAN KHUSUS DESKTOP (lg:flex): Efek Senter (abu.png + on.png) */}
         <div
           ref={cardRef}
-          className="relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] h-[320px] sm:h-[400px] lg:h-[480px] cursor-pointer select-none group"
+          className="hidden lg:block relative w-full max-w-[400px] h-[480px] cursor-pointer select-none group"
         >
           {/* Layer 1: Gambar Hitam Putih (abu.png) */}
           <img
@@ -229,7 +236,7 @@ export default function About() {
           />
 
           {/* Layer 3: Gradient Fade-to-Black di Bawah Foto */}
-          <div className="absolute inset-x-0 bottom-0 h-28 sm:h-32 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
         </div>
       </div>
     </section>
