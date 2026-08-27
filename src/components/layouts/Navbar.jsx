@@ -5,7 +5,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navItems = ['Home', 'About Me', 'My Project', 'Carrer', 'Certificate', 'Contact'];
+  const navItems = ['Home', 'About Me', 'My Project', 'Certificate', 'Contact'];
 
   useEffect(() => {
     const handleScroll = () => {
