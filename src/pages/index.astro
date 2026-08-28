@@ -5,13 +5,15 @@ import "../styles/global.css";
 import Navbar from '../components/layouts/Navbar.jsx';
 import HeroSection from '../components/sections/HeroSection.jsx';
 import About from '../components/sections/About.jsx';
+import Project from '../components/sections/Project.jsx';
 ---
 
 <Layout>
   <!-- TAMBAHKAN h-screen overflow-y-scroll snap-y snap-mandatory DI SINI -->
-  <main class="relative w-full h-screen overflow-y-scroll overflow-x-hidden snap-y snap-mandatory bg-black text-white selection:bg-fuchsia-500 selection:text-white">
+  <main class="relative w-full h-screen overflow-y-scroll overflow-x-hidden bg-black text-white selection:bg-fuchsia-500 selection:text-white">
     <Navbar client:load />
     <HeroSection client:load />
     <About client:load />
+    <Project client:load />
   </main>
 </Layout>

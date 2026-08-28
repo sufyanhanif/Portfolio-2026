@@ -83,3 +83,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #d946ef; /* fuchsia-500 */
 }
+
+html, body {
+  overflow: hidden; /* ATAU overflow-y: hidden */
+  height: 100%;
+}
