@@ -173,15 +173,18 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about-me"
-      className="relative w-full min-h-screen bg-black text-white p-5 sm:p-8 md:p-12 flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 items-center justify-center overflow-hidden pt-24 lg:pt-16 pb-12"
+      className="relative w-full min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 flex items-center justify-center overflow-hidden pt-24 lg:pt-16 pb-12"
     >
       {/* GLOW UNGU */}
       <div 
         className="absolute -top-16 -right-16 sm:-top-40 sm:-right-36 w-64 sm:w-[500px] md:w-[650px] h-64 sm:h-[500px] md:h-[650px] bg-[#6b0870]/40 sm:bg-[#7b008b]/35 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none z-0" 
       />
 
-      {/* BENTO GRID */}
-      <div className="w-full lg:w-1/2 flex flex-col gap-4 max-w-xl z-10">
+      {/* CONTAINER PRESISI MAX-W-7XL */}
+      <div className="max-w-7xl mx-auto w-full flex flex-col-reverse lg:flex-row gap-8 lg:gap-12 items-center justify-center z-10">
+        
+        {/* BENTO GRID */}
+        <div className="w-full lg:w-1/2 flex flex-col gap-4 z-10">
         
         {/* Profil Brief */}
         <div 
@@ -421,6 +424,7 @@ export default function About() {
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

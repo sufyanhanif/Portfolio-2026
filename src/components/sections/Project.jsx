@@ -154,13 +154,13 @@ export default function Project() {
       style={{ height: '350vh' }}
     >
       {/* Sticky Screen Box: Kontainer ini menempel di layar sepanjang 350vh */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-start md:justify-between gap-1 sm:gap-2 md:gap-0 px-4 sm:px-8 md:px-16 pt-14 sm:pt-20 pb-4 md:pb-8 overflow-hidden">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-start md:justify-between gap-1 sm:gap-2 md:gap-0 px-4 sm:px-8 md:px-12 pt-14 sm:pt-20 pb-4 md:pb-8 overflow-hidden">
 
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
 
         {/* --- HEADER & CATEGORY FILTER --- */}
-        <div className="max-w-5xl mx-auto w-full z-10 relative">
+        <div className="max-w-7xl mx-auto w-full z-10 relative">
           <div className={`flex flex-col md:flex-row md:items-end justify-between gap-0.5 md:gap-2 mb-1 md:mb-3 transition-all duration-700 ease-out transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
@@ -200,7 +200,7 @@ export default function Project() {
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className={`max-w-5xl mx-auto w-full z-20 mt-2 sm:mt-3 md:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
+        <div className={`max-w-7xl mx-auto w-full z-20 mt-2 sm:mt-3 md:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}>
 
