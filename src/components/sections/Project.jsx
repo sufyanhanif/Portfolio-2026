@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function Project() {
   const [activeCategory, setActiveCategory] = useState('Website');
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
   const categories = ['Website', 'UI/UX Designer', 'Other'];
@@ -42,6 +43,28 @@ export default function Project() {
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
     },
   ];
+
+  // Intersection Observer untuk Scroll Reveal Trigger (sama seperti di About.jsx)
+  useEffect(() => {
+    const mainEl = document.querySelector('main');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      {
+        root: mainEl || null,
+        threshold: 0.05,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   // Mendengar scroll event dan menghitung progress
   useEffect(() => {
@@ -128,17 +151,19 @@ export default function Project() {
       ref={sectionRef}
       id="my-project"
       className="relative w-full h-[350vh] bg-black text-white"
-      style={{ height: '350vh' }} 
+      style={{ height: '350vh' }}
     >
       {/* Sticky Screen Box: Kontainer ini menempel di layar sepanjang 350vh */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-4 sm:px-8 md:px-16 pt-16 sm:pt-20 pb-6 md:pb-8 overflow-hidden">
-        
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-start md:justify-between gap-1 sm:gap-2 md:gap-0 px-4 sm:px-8 md:px-16 pt-14 sm:pt-20 pb-4 md:pb-8 overflow-hidden">
+
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
 
         {/* --- HEADER & CATEGORY FILTER --- */}
         <div className="max-w-5xl mx-auto w-full z-10 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-1 md:gap-2 mb-2 md:mb-3">
+          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-0.5 md:gap-2 mb-1 md:mb-3 transition-all duration-700 ease-out transform ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Featured <span className="text-fuchsia-500">Project</span>
             </h2>
@@ -147,22 +172,25 @@ export default function Project() {
             </p>
           </div>
 
-          <div className="relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-2 md:my-3">
+          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-1 md:my-3 transition-all duration-700 ease-out transform delay-[150ms] ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}>
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
           </div>
 
-          <div className="flex justify-center mt-2 mb-1 md:my-3">
+          <div className={`flex justify-center mt-1 mb-0 md:my-3 transition-all duration-700 ease-out transform delay-[300ms] ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}>
             <div className="flex items-center gap-1 p-1 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${
-                    activeCategory === cat
-                      ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/30'
-                      : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                  }`}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${activeCategory === cat
+                    ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/30'
+                    : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+                    }`}
                 >
                   {cat}
                 </button>
@@ -172,24 +200,25 @@ export default function Project() {
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className="max-w-5xl mx-auto w-full z-20 mt-1 sm:mt-3 md:my-auto">
-          
+        <div className={`max-w-5xl mx-auto w-full z-20 mt-2 sm:mt-3 md:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`}>
+
           {/* TRAPEZOID TAB FOLDER */}
-          <div className="flex items-end gap-1 px-2 sm:px-6 z-30 relative">
+          <div className="flex items-end gap-1.5 sm:gap-2 px-2 sm:px-6 z-30 relative">
             {projects.map((proj, idx) => {
               const isActive = activeIndex === idx;
               return (
                 <button
                   key={proj.id}
                   onClick={() => handleTabClick(idx)}
-                  className={`relative px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 cursor-pointer select-none ${
-                    isActive
-                      ? 'bg-fuchsia-600 text-white z-30 shadow-lg shadow-fuchsia-600/20'
-                      : 'bg-zinc-900/90 text-zinc-400 hover:text-white border-t border-x border-zinc-800'
-                  }`}
+                  className={`relative px-3 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold tracking-wide transition-all duration-300 cursor-pointer select-none ${isActive
+                    ? 'bg-fuchsia-600 text-white z-30 shadow-lg shadow-fuchsia-600/20'
+                    : 'bg-zinc-900/90 text-zinc-400 hover:text-white border-t border-x border-zinc-800'
+                    }`}
                   style={{
                     clipPath: 'polygon(0% 0%, 82% 0%, 100% 100%, 0% 100%)',
-                    paddingRight: '2rem',
+                    paddingRight: '1.5rem',
                   }}
                 >
                   {proj.tabTitle}
@@ -237,7 +266,7 @@ export default function Project() {
                   }}
                 >
                   <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center h-full">
-                    
+
                     {/* LEFT SIDE: DETAILS */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-between h-full">
                       <div>
@@ -310,7 +339,7 @@ export default function Project() {
         </div>
 
         {/* SCROLL INDICATOR FOOTER */}
-        <div className="text-center z-10 text-[10px] font-mono text-zinc-500">
+        <div className="mt-auto md:mt-0 text-center z-10 text-[10px] font-mono text-zinc-500 py-1">
           Scroll down/up to navigate projects ({activeIndex + 1}/{projects.length})
         </div>
 
