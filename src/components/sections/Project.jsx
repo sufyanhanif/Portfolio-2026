@@ -131,14 +131,14 @@ export default function Project() {
       style={{ height: '350vh' }} 
     >
       {/* Sticky Screen Box: Kontainer ini menempel di layar sepanjang 350vh */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-4 sm:px-8 md:px-16 pt-20 pb-8 overflow-hidden">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-4 sm:px-8 md:px-16 pt-16 sm:pt-20 pb-6 md:pb-8 overflow-hidden">
         
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
 
         {/* --- HEADER & CATEGORY FILTER --- */}
         <div className="max-w-5xl mx-auto w-full z-10 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-3">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-1 md:gap-2 mb-2 md:mb-3">
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Featured <span className="text-fuchsia-500">Project</span>
             </h2>
@@ -147,12 +147,12 @@ export default function Project() {
             </p>
           </div>
 
-          <div className="relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-3">
+          <div className="relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-2 md:my-3">
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
           </div>
 
-          <div className="flex justify-center my-3">
+          <div className="flex justify-center mt-2 mb-1 md:my-3">
             <div className="flex items-center gap-1 p-1 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
               {categories.map((cat) => (
                 <button
@@ -172,7 +172,7 @@ export default function Project() {
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className="max-w-5xl mx-auto w-full z-20 my-auto">
+        <div className="max-w-5xl mx-auto w-full z-20 mt-1 sm:mt-3 md:my-auto">
           
           {/* TRAPEZOID TAB FOLDER */}
           <div className="flex items-end gap-1 px-2 sm:px-6 z-30 relative">
@@ -182,14 +182,14 @@ export default function Project() {
                 <button
                   key={proj.id}
                   onClick={() => handleTabClick(idx)}
-                  className={`relative px-5 py-2 text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 cursor-pointer select-none ${
+                  className={`relative px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 cursor-pointer select-none ${
                     isActive
                       ? 'bg-fuchsia-600 text-white z-30 shadow-lg shadow-fuchsia-600/20'
                       : 'bg-zinc-900/90 text-zinc-400 hover:text-white border-t border-x border-zinc-800'
                   }`}
                   style={{
                     clipPath: 'polygon(0% 0%, 82% 0%, 100% 100%, 0% 100%)',
-                    paddingRight: '2.2rem',
+                    paddingRight: '2rem',
                   }}
                 >
                   {proj.tabTitle}
@@ -199,7 +199,7 @@ export default function Project() {
           </div>
 
           {/* CARDS STACK */}
-          <div className="relative w-full h-[400px] sm:h-[380px]">
+          <div className="relative w-full h-[450px] sm:h-[400px] lg:h-[380px]">
             {projects.map((project, index) => {
               // Menghitung selisih index proyek saat ini dengan index progress scroll
               const diff = index - steppedIndex;
