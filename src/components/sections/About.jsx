@@ -12,21 +12,56 @@ export default function About() {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  // Array ikon My Stacks
-  const stacks = [
+  // Array ikon My Stacks (Dibagi menjadi 2 Baris: Atas & Bawah)
+  const stacksRow1 = [
     { name: 'Astro', icon: '/stacks/astro.svg' },
     { name: 'Laravel', icon: '/stacks/laravel.svg' },
     { name: 'React', icon: '/stacks/react.svg' },
-    { name: 'JavaScript', icon: '/stacks/javascript.svg' },
+    { name: 'HTML', icon: '/stacks/html.svg' },
+  ];
+
+  const stacksRow2 = [
     { name: 'PHP', icon: '/stacks/php.svg' },
     { name: 'MySQL', icon: '/stacks/mysql.svg' },
     { name: 'CSS', icon: '/stacks/css.svg' },
-    { name: 'Framer', icon: '/stacks/framer.svg' },
+    { name: 'Figma', icon: '/stacks/figma.svg' },
+  ];
+
+  // Data Career Timeline (Selang-seling Kiri/Kanan)
+  const careers = [
+    {
+      title: 'Web Developer',
+      company: 'CV Omah IOT',
+      date: 'Jan 2026 – Present',
+      type: 'Contract',
+      side: 'left',
+    },
+    {
+      title: 'UI/UX Designer',
+      company: 'PT Tiga Serangkai',
+      date: 'Des 2024 – Jan 2025',
+      type: 'Internship',
+      side: 'right',
+    },
+    {
+      title: 'UI/UX Designer',
+      company: 'Manifestasi',
+      date: 'Aug 2025 – Present',
+      type: 'Freelance',
+      side: 'left',
+    },
+    {
+      title: 'UI/UX Designer',
+      company: 'PT Campus Digital',
+      date: 'Sep 2024 – Des 2024',
+      type: 'Internship',
+      side: 'right',
+    },
   ];
 
   const cardHoverStyle = "hover:scale-[1.02] hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] cursor-default";
 
-  // 1. Intersection Observer untuk Scroll Reveal Trigger
+  // 1. Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -161,93 +196,144 @@ export default function About() {
           </p>
         </div>
 
-        {/* Grid Tengah: Education & Career */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          <div 
-            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[300ms] lg:delay-[150ms] ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}
-          >
-            <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
-              <span>🎓 Education</span>
+        {/* Grid Tengah & Bawah: Left Column (Education + My Stacks) vs Right Column (Career Vertical Timeline) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          {/* KOLOM KIRI: Education & My Stacks */}
+          <div className="flex flex-col gap-4 justify-between h-full">
+            {/* Education */}
+            <div 
+              className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[300ms] lg:delay-[150ms] ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-2.5 text-[11px] sm:text-sm">
+                <span>🎓 Education</span>
+              </div>
+
+              <div className="flex flex-col gap-2.5">
+                {/* 1. Politeknik Negeri Semarang */}
+                <div>
+                  <h2 className="text-[11px] sm:text-sm font-bold leading-tight">Politeknik Negeri Semarang</h2>
+                  <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">2021 – 2025</p>
+                  <p className="text-[10px] sm:text-xs text-zinc-400 mt-1 leading-snug">Bachelor of Computer Eng.</p>
+                  <p className="text-[10px] sm:text-xs text-zinc-400">Grade: 3.87/4.00 (Cumlaude)</p>
+                </div>
+
+                {/* Separator */}
+                <div className="border-t border-zinc-800/80" />
+
+                {/* 2. SMA Negeri 9 Semarang */}
+                <div>
+                  <h2 className="text-[11px] sm:text-sm font-bold leading-tight">SMA Negeri 9 Semarang</h2>
+                  <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">2018 – 2021</p>
+                  <p className="text-[10px] sm:text-xs text-zinc-400 mt-1 leading-snug">Mathematics and Natural Sciences</p>
+                  <p className="text-[10px] sm:text-xs text-zinc-400">Grade: 90/100</p>
+                </div>
+              </div>
             </div>
-            <h2 className="text-[11px] sm:text-sm font-bold leading-tight">Politeknik Negeri Semarang</h2>
-            <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">2021 - 2025</p>
-            <p className="text-[10px] sm:text-xs text-zinc-400 mt-1.5 leading-snug">Bachelor of Computer Eng.</p>
-            <p className="text-[10px] sm:text-xs text-zinc-400">Grade: 3.87/4.00</p>
+
+            {/* My Stacks (2 Baris Static tanpa Animasi) */}
+            <div 
+              className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-between relative backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[450ms] lg:delay-[300ms] ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1 text-[11px] sm:text-sm">
+                <span>🛠 My Stacks</span>
+              </div>
+
+              <div className="flex flex-col gap-2.5 pt-1.5 pb-0.5">
+                {/* Baris 1: 4 Ikon */}
+                <div className="flex items-center justify-around gap-2">
+                  {stacksRow1.map((item, index) => (
+                    <div key={`row1-${index}`} className="relative group/stack flex flex-col items-center">
+                      <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
+                        {item.name}
+                      </span>
+                      <img
+                        src={item.icon}
+                        alt={item.name}
+                        className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-800 rounded-lg border border-zinc-700 object-contain transition-transform group-hover/stack:scale-110"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Baris 2: 4 Ikon */}
+                <div className="flex items-center justify-around gap-2">
+                  {stacksRow2.map((item, index) => (
+                    <div key={`row2-${index}`} className="relative group/stack flex flex-col items-center">
+                      <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
+                        {item.name}
+                      </span>
+                      <img
+                        src={item.icon}
+                        alt={item.name}
+                        className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-800 rounded-lg border border-zinc-700 object-contain transition-transform group-hover/stack:scale-110"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* KOLOM KANAN: CAREER TIMELINE VERTIKAL DASH */}
           <div 
-            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[450ms] lg:delay-[300ms] ${
+            className={`bg-zinc-900/80 p-3.5 sm:p-4 rounded-2xl border border-zinc-800 backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[600ms] lg:delay-[450ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
-            <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
+            <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-3 text-[11px] sm:text-sm">
               <span>💼 Career</span>
             </div>
-            <h2 className="text-[11px] sm:text-sm font-bold leading-tight">Web Developer</h2>
-            <p className="text-[9px] sm:text-[11px] text-zinc-500">Jan 2026 - Present</p>
-            <p className="text-[10px] sm:text-xs text-zinc-400">CV Omah IOT</p>
 
-            <h2 className="text-[11px] sm:text-sm font-bold leading-tight mt-2">UI/UX DESIGNER</h2>
-            <p className="text-[9px] sm:text-[11px] text-zinc-500">Aug 2025 - Present</p>
-            <p className="text-[10px] sm:text-xs text-zinc-400">Manifestasi</p>
-          </div>
-        </div>
+            {/* Container TIMELINE VERTIKAL */}
+            <div className="relative py-1">
+              {/* Garis Putus-putus Vertikal di Tengah (Dash Line) */}
+              <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-[1px] border-r border-dashed border-zinc-700" />
 
-        {/* Grid Bawah: Achievement & My Stacks */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          <div 
-            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[600ms] lg:delay-[450ms] ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}
-          >
-            <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1.5 text-[11px] sm:text-sm">
-              <span>🏆 Achievement</span>
-            </div>
-            <p className="text-[10px] sm:text-xs font-bold leading-tight">2nd place in INOVATION 2022</p>
-            <p className="text-[9px] sm:text-[11px] text-zinc-500 mt-0.5">Video Competition</p>
-          </div>
+              <div className="flex flex-col gap-5">
+                {careers.map((item, idx) => (
+                  <div key={idx} className="relative flex items-center w-full min-h-[44px]">
+                    
+                    {/* Kotak Magenta di Garis Tengah */}
+                    <div className="absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-fuchsia-500 z-10 rounded-[1px] shadow-[0_0_8px_rgba(217,70,239,0.8)]" />
 
-          <div 
-            className={`bg-zinc-900/80 p-3.5 sm:p-5 rounded-2xl border border-zinc-800 flex flex-col justify-center relative backdrop-blur-sm transition-all duration-700 ease-out transform ${cardHoverStyle} delay-[750ms] lg:delay-[600ms] ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}
-          >
-            <div className="flex items-center gap-1.5 text-fuchsia-500 font-semibold mb-1 text-[11px] sm:text-sm">
-              <span>🛠 My Stacks</span>
-            </div>
+                    {/* SISI KIRI (Jika item.side === 'left') */}
+                    {item.side === 'left' ? (
+                      <div className="w-[45%] pr-2 text-right">
+                        <h2 className="text-[10px] sm:text-[11px] font-bold text-white leading-tight">
+                          {item.title} <span className="text-[8px] sm:text-[9px] text-fuchsia-400 font-normal">▪ {item.company}</span>
+                        </h2>
+                        <p className="text-[8px] sm:text-[9px] text-zinc-400 mt-0.5">{item.date}</p>
+                        <p className="text-[8px] text-zinc-500">{item.type}</p>
+                      </div>
+                    ) : (
+                      <div className="w-[45%]" /> // Spacer Kosong
+                    )}
 
-            <div className="relative w-full overflow-hidden pt-5 pb-0.5">
-              <div className="flex gap-2 sm:gap-3 animate-marquee w-max hover:[animation-play-state:paused]">
-                {stacks.map((item, index) => (
-                  <div key={`stack-1-${index}`} className="relative group/stack flex flex-col items-center">
-                    <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
-                      {item.name}
-                    </span>
-                    <img
-                      src={item.icon}
-                      alt={item.name}
-                      className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-800 rounded-lg border border-zinc-700 object-contain transition-transform group-hover/stack:scale-110"
-                    />
-                  </div>
-                ))}
+                    {/* SISI KANAN (Jika item.side === 'right') */}
+                    {item.side === 'right' ? (
+                      <div className="w-[45%] pl-2 text-left ml-auto">
+                        <h2 className="text-[10px] sm:text-[11px] font-bold text-white leading-tight">
+                          {item.title} <span className="text-[8px] sm:text-[9px] text-fuchsia-400 font-normal">▪ {item.company}</span>
+                        </h2>
+                        <p className="text-[8px] sm:text-[9px] text-zinc-400 mt-0.5">{item.date}</p>
+                        <p className="text-[8px] text-zinc-500">{item.type}</p>
+                      </div>
+                    ) : (
+                      <div className="w-[45%]" /> // Spacer Kosong
+                    )}
 
-                {stacks.map((item, index) => (
-                  <div key={`stack-2-${index}`} className="relative group/stack flex flex-col items-center">
-                    <span className="absolute -top-6 opacity-0 group-hover/stack:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-30">
-                      {item.name}
-                    </span>
-                    <img
-                      src={item.icon}
-                      alt={item.name}
-                      className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-800 rounded-lg border border-zinc-700 object-contain transition-transform group-hover/stack:scale-110"
-                    />
                   </div>
                 ))}
               </div>
             </div>
+
           </div>
+
         </div>
       </div>
 
@@ -257,42 +343,32 @@ export default function About() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}
       >
-        {/* ========================================================
-            PANAH MELENGKUNG & TEKS PANDUAN (DESKTOP & MOBILE)
-           ======================================================== */}
-        
-        {/* 1. Panduan Khusus MOBILE (Pojok Kanan Foto) */}
+        {/* Panduan Khusus MOBILE */}
         <div className="flex lg:hidden absolute -bottom-9 left-1/2 -translate-x-1/2 flex-col items-center pointer-events-none z-20 animate-bounce-slow">
-            {/* Panah Menunjuk ke Atas */}
-            <svg className="w-4 h-4 text-fuchsia-400 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" strokeDasharray="3 3" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-            
-            {/* Teks Panduan */}
-            <span className="text-[10px] font-mono tracking-wide text-fuchsia-300 bg-zinc-900/90 px-2.5 py-0.5 rounded-full border border-fuchsia-500/30 shadow-md whitespace-nowrap">
-                Tap to illuminate ✨
-            </span>
-            </div>
+          <svg className="w-4 h-4 text-fuchsia-400 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" strokeDasharray="3 3" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+          <span className="text-[10px] font-mono tracking-wide text-fuchsia-300 bg-zinc-900/90 px-2.5 py-0.5 rounded-full border border-fuchsia-500/30 shadow-md whitespace-nowrap">
+            Tap to illuminate ✨
+          </span>
+        </div>
 
-        {/* 2. Panduan Khusus DESKTOP (Samping Kiri Foto dengan Panah Melengkung Dash) */}
+        {/* Panduan Khusus DESKTOP */}
         <div className="hidden lg:flex absolute top-12 -right-16 flex-col items-start pointer-events-none z-20 animate-pulse">
-            <span className="text-xs font-mono text-fuchsia-300 bg-zinc-900/90 px-2.5 py-1 rounded-full border border-fuchsia-500/30 shadow-lg whitespace-nowrap">
-                Hover to illuminate 💡
-            </span>
-            
-            {/* Panah Melengkung Dash ke arah kiri foto */}
-            <svg className="w-12 h-12 text-fuchsia-400 -mt-1 ml-2 transform -scale-x-100" viewBox="0 0 50 50" fill="none">
-                <path
-                d="M 10 10 Q 35 15 35 35"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeDasharray="4 3"
-                strokeLinecap="round"
-                />
-                <polygon points="30,30 38,38 38,28" fill="currentColor" />
-            </svg>
-            </div>
-
+          <span className="text-xs font-mono text-fuchsia-300 bg-zinc-900/90 px-2.5 py-1 rounded-full border border-fuchsia-500/30 shadow-lg whitespace-nowrap">
+            Hover to illuminate 💡
+          </span>
+          <svg className="w-12 h-12 text-fuchsia-400 -mt-1 ml-2 transform -scale-x-100" viewBox="0 0 50 50" fill="none">
+            <path
+              d="M 10 10 Q 35 15 35 35"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeDasharray="4 3"
+              strokeLinecap="round"
+            />
+            <polygon points="30,30 38,38 38,28" fill="currentColor" />
+          </svg>
+        </div>
 
         {/* TAMPILAN MOBILE: Efek Sentuh */}
         <div 
