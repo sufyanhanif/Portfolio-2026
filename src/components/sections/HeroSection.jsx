@@ -21,7 +21,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative flex flex-col items-center justify-between min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 animate-page-fade-in overflow-hidden">
+    <section id="home" className="relative flex flex-col items-center justify-between min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 animate-page-fade-in overflow-hidden bg-[#0a0a0a]">
       
       {/* --- GLOW UNGU KIRI ATAS --- */}
       <div 
@@ -33,8 +33,32 @@ export default function HeroSection() {
         className="absolute -bottom-16 -right-16 sm:-bottom-36 sm:-right-36 w-64 sm:w-[500px] md:w-[650px] h-64 sm:h-[500px] md:h-[650px] bg-[#6b0870]/40 sm:bg-[#7b008b]/35 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none -z-10" 
       />
 
-      {/* Main Hero Bounding Box */}
-      <div className="flex flex-col items-center text-center my-auto w-full max-w-5xl z-10">
+      {/* Main Hero Bounding Box - Menambahkan relative agar buble bisa nempel di sekitarnya */}
+      <div className="relative flex flex-col items-center text-center my-auto w-full max-w-5xl z-10">
+       {/* 1. Kiri Atas: UI/UX Architect (Border Kuning Neon) */}
+        <div className="hidden md:flex absolute top-2 left-2 lg:left-6 bg-black/90 text-white px-3 py-1 rounded-md rotate-[-6deg] font-bold text-xs border border-yellow-400/60 shadow-[0_0_10px_rgba(250,204,21,0.2)] hover:border-yellow-400 hover:shadow-[0_0_20px_rgba(250,204,21,0.8)] hover:scale-110 transition-all duration-300 cursor-pointer z-20">
+          <span>UI/UX ARCHITECT</span>
+        </div>
+
+        {/* 2. Kanan Atas: Fullstack Code (Border Cyan/Biru) */}
+        <div className="hidden md:flex absolute top-0 right-2 lg:right-6 bg-black/90 text-white px-3 py-1 rounded-md rotate-[5deg] font-bold text-xs border border-cyan-400/60 shadow-[0_0_10px_rgba(6,182,212,0.2)] hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.8)] hover:scale-110 transition-all duration-300 cursor-pointer z-20">
+          <span>FULLSTACK CODE</span>
+        </div>
+
+        {/* 3. Kiri Bawah: Clean & Responsive (Border Hijau Lime) */}
+        <div className="hidden md:flex absolute bottom-20 left-4 lg:left-10 bg-black/90 text-white px-3 py-1 rounded-md rotate-[-4deg] font-bold text-xs border border-lime-400/60 shadow-[0_0_10px_rgba(163,230,53,0.2)] hover:border-lime-400 hover:shadow-[0_0_20px_rgba(163,230,53,0.8)] hover:scale-110 transition-all duration-300 cursor-pointer z-20">
+          <span>CLEAN & RESPONSIVE</span>
+        </div>
+
+        {/* 4. Kanan Bawah: Portfolio '26 (Border Magenta/Fuchsia) */}
+        <div className="hidden md:flex absolute bottom-24 right-4 lg:right-10 bg-black/90 text-white px-3 py-1 rounded-md rotate-[7deg] font-bold text-xs border border-fuchsia-400/60 shadow-[0_0_10px_rgba(232,121,249,0.2)] hover:border-fuchsia-400 hover:shadow-[0_0_20px_rgba(232,121,249,0.8)] hover:scale-110 transition-all duration-300 cursor-pointer z-20">
+          <span>PORTFOLIO &apos;26</span>
+        </div>
+
+        {/* ============================================================ */}
+        {/* --- KOTAK UTAMA (SUFYAN) --- */}
+        {/* ============================================================ */}
+        
         <div className="relative border border-dashed border-neutral-600/80 bg-black/40 backdrop-blur-[2px] px-3 sm:px-6 md:px-8 pt-3 sm:pt-4 pb-2.5 sm:pb-4 mb-4 sm:mb-8 w-fit max-w-[95vw]">
           {/* Titik Sudut Magenta */}
           <span className="absolute -top-1 -left-1 sm:-top-1.5 sm:-left-1.5 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-fuchsia-500 z-10" />
@@ -48,7 +72,7 @@ export default function HeroSection() {
 
           {/* Tagline Portofolio */}
           <p className="text-left text-xs sm:text-lg md:text-xl font-medium tracking-wide text-neutral-300 pl-0.5 mb-[-2px] sm:mb-[-6px]">
-            Portofolio
+            Hai my Name is
           </p>
 
           {/* Typography SUFYAN */}
@@ -70,12 +94,12 @@ export default function HeroSection() {
         </div>
 
         {/* Subtitle */}
-        <h2 className="text-sm xs:text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white mb-6">
+        <h2 className="text-sm xs:text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white mb-6 z-10">
           Web Developer &amp; UI/UX Designer
         </h2>
 
         {/* Deretan Ikon Sosmed */}
-        <div className="flex items-center gap-4 sm:gap-6 bg-zinc-900/60 backdrop-blur-md px-5 py-2.5 rounded-full border border-zinc-800/80 shadow-lg">
+        <div className="flex items-center gap-4 sm:gap-6 bg-zinc-900/60 backdrop-blur-md px-5 py-2.5 rounded-full border border-zinc-800/80 shadow-lg z-10">
           {socialLinks.map((social) => (
             <a
               key={social.name}
