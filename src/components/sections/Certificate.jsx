@@ -87,7 +87,7 @@ export default function CertificateSection() {
   return (
     <section 
       ref={sectionRef} 
-      id="certificates" 
+      id="certificate" 
       className="relative w-full min-h-screen bg-black text-white px-3 sm:px-8 md:px-16 py-16 sm:py-20 overflow-hidden"
     >
       {/* Ambient Glow Ungu */}
@@ -100,9 +100,6 @@ export default function CertificateSection() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div>
-            <span className="text-[10px] sm:text-xs font-mono text-fuchsia-400 tracking-widest uppercase">
-              Certifications &amp; Achievements
-            </span>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight mt-0.5">
               My <span className="text-fuchsia-500">Certificates</span>
             </h2>

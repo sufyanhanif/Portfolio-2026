@@ -218,8 +218,8 @@ export default function Project() {
             })}
           </div>
 
-          {/* CARDS STACK CONTAINER (TINGGI DIPERBESAR DI MOBILE: h-[540px] sm:h-[460px] lg:h-[380px]) */}
-          <div className="relative w-full h-[540px] xs:h-[500px] sm:h-[460px] lg:h-[380px]">
+          {/* CARDS STACK CONTAINER */}
+          <div className="relative w-full h-[460px] xs:h-[430px] sm:h-[410px] lg:h-[380px]">
             {projects.map((project, index) => {
               const diff = index - steppedIndex;
 
@@ -254,26 +254,38 @@ export default function Project() {
                       'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  {/* flex-col-reverse agar GAMBAR BERADA DI ATAS pada mode Mobile, dan DI KANAN pada Mode Desktop */}
-                  <div className="flex flex-col-reverse lg:flex-row gap-3 sm:gap-6 lg:gap-8 items-center justify-between h-full overflow-y-auto lg:overflow-visible no-scrollbar">
+                  {/* Seluruh konten (Gambar + Teks) menyatu dalam satu alur flex vertikal di Mobile */}
+                  <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch lg:items-center justify-start lg:justify-between h-full overflow-y-auto lg:overflow-visible no-scrollbar">
 
-                    {/* LEFT SIDE: DETAILS */}
+                    {/* GAMBAR DITAMPILKAN PERTAMA DI MOBILE */}
+                    <div className="w-full lg:w-1/2 flex justify-center items-center shrink-0">
+                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-36 xs:h-40 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 h-10 sm:h-16 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                    </div>
+
+                    {/* TEKS MENYATU DI BAWAH GAMBAR */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-full">
                       <div>
                         <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-widest text-zinc-500 uppercase">
                           {project.date}
                         </span>
 
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-2 sm:mb-3 tracking-tight">
+                        <h3 className="text-base xs:text-lg sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1.5 sm:mb-3 tracking-tight">
                           {project.title}
                         </h3>
 
                         {/* STACK ICONS */}
-                        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
                           {project.stacks.map((iconPath, i) => (
                             <div
                               key={i}
-                              className="w-7 h-7 sm:w-8 sm:h-8 p-1.5 bg-zinc-950 rounded-lg sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
+                              className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-950 rounded-lg sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
                             >
                               <img
                                 src={iconPath}
@@ -305,18 +317,6 @@ export default function Project() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
                         </a>
-                      </div>
-                    </div>
-
-                    {/* RIGHT SIDE: IMAGE MOCKUP (GAMBAR BESAR DAN LEBAR DI MOBILE) */}
-                    <div className="w-full lg:w-1/2 flex justify-center items-center">
-                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-44 xs:h-48 sm:h-52 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-2xl group">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 h-10 sm:h-16 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </div>
 
