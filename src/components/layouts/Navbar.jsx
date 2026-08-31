@@ -5,8 +5,23 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const navItems = ['Home', 'About Me', 'My Project', 'Certificate', 'Contact'];
+
+  useEffect(() => {
+    const handleLoaded = () => {
+      setIsLoaded(true);
+    };
+
+    window.addEventListener('portfolioLoaded', handleLoaded);
+    const timer = setTimeout(() => setIsLoaded(true), 2000);
+
+    return () => {
+      window.removeEventListener('portfolioLoaded', handleLoaded);
+      clearTimeout(timer);
+    };
+  }, []);
 
   // 1. Deteksi Scroll (Show/Hide Navbar & Background Change)
   useEffect(() => {
@@ -109,8 +124,8 @@ export default function Navbar() {
     <>
       {/* NAVBAR HEADER */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out ${
+          isLoaded && isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         } ${
           isScrolled || isOpen
             ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-4 shadow-lg shadow-black/40'

@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function HeroSection() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const handleLoaded = () => {
+      setIsLoaded(true);
+    };
+
+    window.addEventListener('portfolioLoaded', handleLoaded);
+
+    // Fallback jika loading screen sudah selesai / tidak digunakan
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 2000);
+
+    return () => {
+      window.removeEventListener('portfolioLoaded', handleLoaded);
+      clearTimeout(timer);
+    };
+  }, []);
+
   // Array data media sosial
   const socialLinks = [
     { name: 'GitHub', icon: '/icons/github.svg', url: 'https://github.com/sufyanhanif/' },
@@ -21,7 +41,12 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative flex flex-col items-center justify-between min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 animate-page-fade-in overflow-hidden bg-[#0a0a0a]">
+    <section
+      id="home"
+      className={`relative flex flex-col items-center justify-between min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 overflow-hidden bg-[#0a0a0a] transition-all duration-1000 ease-out ${
+        isLoaded ? 'animate-page-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
       
       {/* --- GLOW UNGU KIRI ATAS --- */}
       <div 
