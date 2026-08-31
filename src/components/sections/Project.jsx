@@ -44,7 +44,7 @@ export default function Project() {
     },
   ];
 
-  // Intersection Observer untuk Scroll Reveal Trigger
+  // Intersection Observer
   useEffect(() => {
     const mainEl = document.querySelector('main');
     const observer = new IntersectionObserver(
@@ -143,7 +143,7 @@ export default function Project() {
       className="relative w-full h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-3 sm:px-8 md:px-12 pt-12 sm:pt-20 pb-4 md:pb-8 overflow-hidden">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-3 sm:px-8 md:px-12 pt-10 sm:pt-20 pb-3 md:pb-8 overflow-hidden">
 
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
@@ -218,8 +218,8 @@ export default function Project() {
             })}
           </div>
 
-          {/* CARDS STACK CONTAINER (RESPONSIVE HEIGHT: h-[480px] xs:h-[460px] lg:h-[380px]) */}
-          <div className="relative w-full h-[480px] xs:h-[460px] sm:h-[440px] lg:h-[380px]">
+          {/* CARDS STACK CONTAINER (TINGGI DIPERBESAR DI MOBILE: h-[540px] sm:h-[460px] lg:h-[380px]) */}
+          <div className="relative w-full h-[540px] xs:h-[500px] sm:h-[460px] lg:h-[380px]">
             {projects.map((project, index) => {
               const diff = index - steppedIndex;
 
@@ -254,11 +254,11 @@ export default function Project() {
                       'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  {/* GRID KONTEN CARD (Flex direction column di mobile, row di desktop) */}
-                  <div className="flex flex-col lg:flex-row gap-3 sm:gap-6 lg:gap-8 items-center justify-between h-full overflow-y-auto lg:overflow-visible no-scrollbar">
+                  {/* flex-col-reverse agar GAMBAR BERADA DI ATAS pada mode Mobile, dan DI KANAN pada Mode Desktop */}
+                  <div className="flex flex-col-reverse lg:flex-row gap-3 sm:gap-6 lg:gap-8 items-center justify-between h-full overflow-y-auto lg:overflow-visible no-scrollbar">
 
                     {/* LEFT SIDE: DETAILS */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-full shrink-0 lg:shrink">
+                    <div className="w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-full">
                       <div>
                         <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-widest text-zinc-500 uppercase">
                           {project.date}
@@ -284,7 +284,7 @@ export default function Project() {
                           ))}
                         </div>
 
-                        <p className="text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
+                        <p className="text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-relaxed font-normal">
                           {project.description}
                         </p>
                       </div>
@@ -308,9 +308,9 @@ export default function Project() {
                       </div>
                     </div>
 
-                    {/* RIGHT SIDE: IMAGE MOCKUP (PRESISI DAN FIT DI MOBILE) */}
-                    <div className="w-full lg:w-1/2 flex justify-center items-center shrink-0">
-                      <div className="relative w-full max-w-[240px] xs:max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] h-28 xs:h-36 sm:h-44 lg:h-auto lg:aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
+                    {/* RIGHT SIDE: IMAGE MOCKUP (GAMBAR BESAR DAN LEBAR DI MOBILE) */}
+                    <div className="w-full lg:w-1/2 flex justify-center items-center">
+                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-44 xs:h-48 sm:h-52 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-2xl group">
                         <img
                           src={project.image}
                           alt={project.title}
