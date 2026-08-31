@@ -143,40 +143,40 @@ export default function Project() {
       className="relative w-full h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-6 sm:pt-16 pb-3 md:pb-6 overflow-hidden">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-16 sm:pt-20 pb-3 md:pb-6 overflow-hidden">
 
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
 
         {/* --- HEADER & CATEGORY FILTER --- */}
         <div className="max-w-7xl mx-auto w-full z-10 relative">
-          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-0.5 md:gap-2 mb-1 md:mb-3 transition-all duration-700 ease-out transform ${
+          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6 transition-all duration-700 ease-out transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
-            <h2 className="text-xl sm:text-4xl font-bold tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
               Featured <span className="text-fuchsia-500">Project</span>
             </h2>
-            <p className="text-[11px] sm:text-sm text-zinc-400 font-medium max-w-xs md:text-right leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-400 font-medium max-w-xs md:text-right leading-relaxed">
               Synergizing Product Design and Web Development
             </p>
           </div>
 
-          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-1 md:my-3 transition-all duration-700 ease-out transform delay-[150ms] ${
+          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6 transition-all duration-700 ease-out transform delay-[150ms] ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
           </div>
 
-          <div className={`flex justify-center mt-1 mb-0 transition-all duration-700 ease-out transform delay-[300ms] ${
+          <div className={`flex justify-center my-6 sm:my-8 transition-all duration-700 ease-out transform delay-[300ms] ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
-            <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3 sm:px-4 py-1 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                  className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-300 cursor-pointer ${
                     activeCategory === cat
                       ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/30'
                       : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
@@ -190,7 +190,7 @@ export default function Project() {
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className={`max-w-7xl mx-auto w-full z-20 mt-1 sm:mt-2 lg:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
+        <div className={`max-w-7xl mx-auto w-full z-20 mt-6 sm:mt-8 lg:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}>
 

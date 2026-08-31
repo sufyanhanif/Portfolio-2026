@@ -88,12 +88,12 @@ export default function CertificateSection() {
     <section 
       ref={sectionRef} 
       id="certificate" 
-      className="relative w-full min-h-screen bg-black text-white px-3 sm:px-8 md:px-16 py-16 sm:py-20 overflow-hidden"
+      className="relative w-full min-h-screen bg-black text-white px-3 sm:px-8 md:px-12 py-16 sm:py-20 overflow-hidden"
     >
       {/* Ambient Glow Ungu */}
       <div className="absolute top-1/3 -right-20 w-96 h-96 bg-[#7b008b]/20 blur-[150px] rounded-full pointer-events-none z-0" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* --- HEADER --- */}
         <div className={`flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6 transition-all duration-700 ease-out transform ${
