@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function CertificateSection() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedCert, setSelectedCert] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   const categories = ['All', 'Web Dev', 'UI/UX', 'Course'];
 
-  // Data Sertifikat dengan Deskripsi
+  // 1. Intersection Observer untuk mentrigger animasi scroll reveal
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 } // Animasi berjalan saat 10% section masuk ke layar
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Data Sertifikat
   const certificates = [
     {
       id: 1,
@@ -65,36 +85,45 @@ export default function CertificateSection() {
     : certificates.filter(c => c.category === activeFilter);
 
   return (
-    <section id="certificates" className="relative w-full min-h-screen bg-black text-white px-3 sm:px-8 md:px-16 py-16 sm:py-20 overflow-hidden">
-      
+    <section 
+      ref={sectionRef} 
+      id="certificates" 
+      className="relative w-full min-h-screen bg-black text-white px-3 sm:px-8 md:px-16 py-16 sm:py-20 overflow-hidden"
+    >
       {/* Ambient Glow Ungu */}
       <div className="absolute top-1/3 -right-20 w-96 h-96 bg-[#7b008b]/20 blur-[150px] rounded-full pointer-events-none z-0" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* --- HEADER --- */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6">
+        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6 transition-all duration-700 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           <div>
             <span className="text-[10px] sm:text-xs font-mono text-fuchsia-400 tracking-widest uppercase">
-              Certifications & Achievements
+              Certifications &amp; Achievements
             </span>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight mt-0.5">
               My <span className="text-fuchsia-500">Certificates</span>
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-zinc-400 max-w-xs md:text-right leading-relaxed">
-            Validated skills and continuous learning path in tech & design.
+            Validated skills and continuous learning path in tech &amp; design.
           </p>
         </div>
 
         {/* Garis Putus-Putus Bounding Box */}
-        <div className="relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6">
+        <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6 transition-all duration-700 delay-100 ease-out transform ${
+          isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-95'
+        }`}>
           <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
           <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
         </div>
 
         {/* --- FILTER BUTTONS --- */}
-        <div className="flex justify-center my-6 sm:my-8">
+        <div className={`flex justify-center my-6 sm:my-8 transition-all duration-700 delay-200 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
             {categories.map((cat) => (
               <button
@@ -112,13 +141,19 @@ export default function CertificateSection() {
           </div>
         </div>
 
-        {/* --- GRID CARDS (2 KOLOM DI MOBILE: grid-cols-2) --- */}
+        {/* --- GRID CARDS DENGAN ANIMASI FADE-IN BERURUTAN (STAGGERED) --- */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-          {filteredCerts.map((cert) => (
+          {filteredCerts.map((cert, index) => (
             <div
               key={cert.id}
               onClick={() => setSelectedCert(cert)}
-              className="group relative bg-zinc-900/80 border border-zinc-800 rounded-xl sm:rounded-2xl overflow-hidden backdrop-blur-sm hover:border-fuchsia-500/50 hover:shadow-[0_0_25px_rgba(217,70,239,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              style={{
+                // Delay animasi bertambah secara dinamis untuk tiap kartu (150ms per item)
+                transitionDelay: isVisible ? `${300 + index * 150}ms` : '0ms',
+              }}
+              className={`group relative bg-zinc-900/80 border border-zinc-800 rounded-xl sm:rounded-2xl overflow-hidden backdrop-blur-sm hover:border-fuchsia-500/50 hover:shadow-[0_0_25px_rgba(217,70,239,0.15)] hover:-translate-y-1.5 transition-all duration-700 ease-out cursor-pointer flex flex-col justify-between transform ${
+                isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-14 scale-95'
+              }`}
             >
               {/* Gambar Sertifikat */}
               <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-950">
@@ -213,7 +248,7 @@ export default function CertificateSection() {
 
               {/* Deskripsi Lengkap dalam Modal */}
               <div className="bg-zinc-950/60 p-3 sm:p-3.5 rounded-xl border border-zinc-800/80">
-                <span className="text-[9px] sm:text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Deskripsi & Output:</span>
+                <span className="text-[9px] sm:text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Deskripsi &amp; Output:</span>
                 <p className="text-xs text-zinc-300 leading-relaxed">
                   {selectedCert.description}
                 </p>
