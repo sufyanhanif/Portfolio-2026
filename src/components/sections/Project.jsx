@@ -143,7 +143,7 @@ export default function Project() {
       className="relative w-full h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-between px-3 sm:px-8 md:px-12 pt-10 sm:pt-20 pb-3 md:pb-8 overflow-hidden">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-6 sm:pt-16 pb-3 md:pb-6 overflow-hidden">
 
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
@@ -168,7 +168,7 @@ export default function Project() {
             <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
           </div>
 
-          <div className={`flex justify-center mt-1 mb-0 md:my-3 transition-all duration-700 ease-out transform delay-[300ms] ${
+          <div className={`flex justify-center mt-1 mb-0 transition-all duration-700 ease-out transform delay-[300ms] ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
             <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
@@ -190,7 +190,7 @@ export default function Project() {
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className={`max-w-7xl mx-auto w-full z-20 my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
+        <div className={`max-w-7xl mx-auto w-full z-20 mt-1 sm:mt-2 lg:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}>
 
@@ -219,7 +219,7 @@ export default function Project() {
           </div>
 
           {/* CARDS STACK CONTAINER */}
-          <div className="relative w-full h-[460px] xs:h-[430px] sm:h-[410px] lg:h-[380px]">
+          <div className="grid grid-cols-1 w-full relative">
             {projects.map((project, index) => {
               const diff = index - steppedIndex;
 
@@ -244,7 +244,7 @@ export default function Project() {
               return (
                 <div
                   key={project.id}
-                  className="absolute inset-0 w-full h-full bg-zinc-900/95 border border-zinc-800 rounded-2xl rounded-tl-none p-4 sm:p-6 lg:p-8 backdrop-blur-xl shadow-2xl origin-top overflow-hidden"
+                  className="col-start-1 row-start-1 w-full h-auto bg-zinc-900/95 border border-zinc-800 rounded-2xl rounded-tl-none p-4 sm:p-6 lg:p-8 backdrop-blur-xl shadow-2xl origin-top"
                   style={{
                     transform: `translateY(${translateY}px) scale(${scale})`,
                     opacity: opacity,
@@ -254,12 +254,11 @@ export default function Project() {
                       'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  {/* Seluruh konten (Gambar + Teks) menyatu dalam satu alur flex vertikal di Mobile */}
-                  <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch lg:items-center justify-start lg:justify-between h-full overflow-y-auto lg:overflow-visible no-scrollbar">
+                  <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-start lg:items-center justify-between">
 
-                    {/* GAMBAR DITAMPILKAN PERTAMA DI MOBILE */}
+                    {/* GAMBAR */}
                     <div className="w-full lg:w-1/2 flex justify-center items-center shrink-0">
-                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-36 xs:h-40 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
+                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-40 xs:h-44 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
                         <img
                           src={project.image}
                           alt={project.title}
@@ -269,19 +268,19 @@ export default function Project() {
                       </div>
                     </div>
 
-                    {/* TEKS MENYATU DI BAWAH GAMBAR */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-full">
+                    {/* TEKS */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-between">
                       <div>
                         <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-widest text-zinc-500 uppercase">
                           {project.date}
                         </span>
 
-                        <h3 className="text-base xs:text-lg sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1.5 sm:mb-3 tracking-tight">
+                        <h3 className="text-base xs:text-lg sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1.5 sm:mb-2 tracking-tight">
                           {project.title}
                         </h3>
 
                         {/* STACK ICONS */}
-                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                           {project.stacks.map((iconPath, i) => (
                             <div
                               key={i}
@@ -326,11 +325,11 @@ export default function Project() {
             })}
           </div>
 
-        </div>
+          {/* SCROLL INDICATOR FOOTER (Ditambah mt-8 di Mobile agar berjarak longgar) */}
+          <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 mt-8 sm:mt-4 py-0.5">
+            Scroll down/up to navigate projects ({activeIndex + 1}/{projects.length})
+          </div>
 
-        {/* SCROLL INDICATOR FOOTER */}
-        <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 py-0.5">
-          Scroll down/up to navigate projects ({activeIndex + 1}/{projects.length})
         </div>
 
       </div>
