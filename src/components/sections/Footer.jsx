@@ -79,18 +79,18 @@ export default function Footer() {
           isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-95'
         }`} />
 
-        {/* FOOTER BOTTOM: Copyright Dynamic Year (Kiri) & Sosmed Icons (Kanan) */}
-        <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 transition-all duration-700 delay-300 ease-out transform ${
+        {/* FOOTER BOTTOM: Copyright Dynamic Year & Sosmed Icons (Mobile: Sosmed atas, Copyright bawah) */}
+        <div className={`flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 transition-all duration-700 delay-300 ease-out transform ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
         }`}>
           
-          {/* Kiri: Copyright Tahun Dinamis */}
+          {/* Copyright Tahun Dinamis */}
           <p className="text-center sm:text-left text-zinc-400 text-xs sm:text-sm font-medium">
             © {currentYear} Sufyan Hanif Ariyana. All rights reserved.
           </p>
 
-          {/* Kanan: Icon Sosmed Berjajar (Sama persis dengan Home / HeroSection) */}
-          <div className="flex items-center gap-3 sm:gap-4 bg-zinc-900/70 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-800/90 shadow-xl hover:border-fuchsia-500/40 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-500">
+          {/* Icon Sosmed Berjajar (Tanpa Border, Ukuran Dikecilkan & Lebih Ringkas) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 bg-zinc-900/60 backdrop-blur-md px-3 py-1.5 rounded-full transition-all duration-300">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
@@ -98,10 +98,10 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.name}
-                className="group/icon relative flex items-center justify-center p-1.5 rounded-full transition-all duration-300 hover:scale-110"
+                className="group/icon relative flex items-center justify-center p-1 rounded-full transition-all duration-300 hover:scale-110"
               >
                 {/* Tooltip Nama Sosmed saat Hover */}
-                <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-20">
+                <span className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-20">
                   {social.name}
                 </span>
 
@@ -109,7 +109,7 @@ export default function Footer() {
                 <img
                   src={social.icon}
                   alt={social.name}
-                  className="w-4 h-4 sm:w-5 sm:h-5 object-contain brightness-0 invert transition-all duration-300 group-hover/icon:[filter:invert(38%)_sepia(90%)_saturate(3000%)_hue-rotate(275deg)_brightness(100%)_contrast(105%)] group-hover/icon:drop-shadow-[0_0_8px_rgba(217,70,239,0.8)]"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 invert transition-all duration-300 group-hover/icon:[filter:invert(38%)_sepia(90%)_saturate(3000%)_hue-rotate(275deg)_brightness(100%)_contrast(105%)] group-hover/icon:drop-shadow-[0_0_8px_rgba(217,70,239,0.8)]"
                 />
               </a>
             ))}
