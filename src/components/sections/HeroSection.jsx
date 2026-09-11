@@ -123,30 +123,51 @@ export default function HeroSection() {
           Web Developer &amp; UI/UX Designer
         </h2>
 
-        {/* Deretan Ikon Sosmed */}
-        <div className="flex items-center gap-4 sm:gap-6 bg-zinc-900/70 backdrop-blur-md px-5 py-2.5 rounded-full border border-zinc-800/90 shadow-xl hover:border-fuchsia-500/40 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-500 z-10">
-          {socialLinks.map((social) => (
-            <a
-              key={social.name}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.name}
-              className="group/icon relative flex items-center justify-center p-1.5 rounded-full transition-all duration-300 hover:scale-110"
+        {/* Deretan Button View Resume (Kiri) & Ikon Sosmed tanpa Card (Kanan) */}
+        <div className="flex flex-col xs:flex-row items-center justify-center gap-3 sm:gap-4 z-10">
+          {/* Tombol View My Resume (Kiri) */}
+          <a
+            href="/file/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-700 hover:from-purple-500 hover:to-fuchsia-500 text-white text-xs font-semibold rounded-full shadow-md shadow-purple-950/40 border border-fuchsia-400/30 transition-all duration-300 transform hover:scale-105 hover:shadow-fuchsia-600/40 cursor-pointer whitespace-nowrap"
+          >
+            <span>View My Resume</span>
+            <svg
+              className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform group-hover:translate-x-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {/* Tooltip Nama Sosmed saat Hover */}
-              <span className="absolute top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-20">
-                {social.name}
-              </span>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
 
-              {/* Ikon SVG */}
-              <img
-                src={social.icon}
-                alt={social.name}
-                className="w-5 h-5 sm:w-6 sm:h-6 object-contain brightness-0 invert transition-all duration-300 group-hover/icon:[filter:invert(38%)_sepia(90%)_saturate(3000%)_hue-rotate(275deg)_brightness(100%)_contrast(105%)] group-hover/icon:drop-shadow-[0_0_8px_rgba(217,70,239,0.8)]"
-              />
-            </a>
-          ))}
+          {/* Ikon Sosmed tanpa Card (Kanan, Ukuran Diperkecil) */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className="group/icon relative flex items-center justify-center p-1 rounded-full transition-all duration-300 hover:scale-110"
+              >
+                {/* Tooltip Nama Sosmed saat Hover */}
+                <span className="absolute top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-all duration-200 bg-fuchsia-600 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded shadow-md whitespace-nowrap pointer-events-none z-20">
+                  {social.name}
+                </span>
+
+                {/* Ikon SVG Ukuran Lebih Kecil */}
+                <img
+                  src={social.icon}
+                  alt={social.name}
+                  className="w-4 h-4 sm:w-[18px] sm:h-[18px] object-contain brightness-0 invert transition-all duration-300 group-hover/icon:[filter:invert(38%)_sepia(90%)_saturate(3000%)_hue-rotate(275deg)_brightness(100%)_contrast(105%)] group-hover/icon:drop-shadow-[0_0_6px_rgba(217,70,239,0.8)]"
+                />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
