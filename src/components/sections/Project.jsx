@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function Project() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
 
   const projects = [
@@ -40,6 +41,16 @@ export default function Project() {
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
     },
   ];
+
+  // Screen size detection for mobile adjustments
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Intersection Observer
   useEffect(() => {
@@ -87,14 +98,16 @@ export default function Project() {
     return () => target.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Calculate card progress with fast snap for mobile
   const getSteppedProgress = (progress) => {
     const totalSteps = projects.length - 1;
     const x = progress * totalSteps;
     const floorX = Math.floor(x);
     const fracX = x - floorX;
 
-    const transitionStart = 0.25;
-    const transitionEnd = 0.75;
+    // Mobile uses a narrower transition window (0.1 to 0.45) for fast, responsive snapping on scroll swipe
+    const transitionStart = isMobile ? 0.1 : 0.25;
+    const transitionEnd = isMobile ? 0.45 : 0.75;
 
     let mappedFrac = 0;
     if (fracX < transitionStart) {
@@ -137,39 +150,37 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[160vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[145vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
-      <div className="sticky top-0 w-full h-[92vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-10 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
+      <div className="sticky top-2 sm:top-0 w-full h-[88vh] xs:h-[90vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-3 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
 
         {/* Ambient Purple Glow */}
-        <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-10 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-fuchsia-900/20 blur-[120px] sm:blur-[140px] rounded-full pointer-events-none z-0" />
 
-        {/* --- HEADER & CATEGORY FILTER --- */}
+        {/* --- HEADER --- */}
         <div className="max-w-7xl mx-auto w-full z-10 relative">
-          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6 transition-all duration-700 ease-out transform ${
+          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-1.5 sm:gap-3 mb-3 sm:mb-6 transition-all duration-700 ease-out transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">
+            <h2 className="text-xl sm:text-4xl font-bold tracking-tight">
               Featured <span className="text-fuchsia-500">Project</span>
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-400 font-medium max-w-xs md:text-right leading-relaxed">
+            <p className="text-[11px] sm:text-sm text-zinc-400 font-medium max-w-xs md:text-right leading-snug sm:leading-relaxed">
               Synergizing Product Design and Web Development
             </p>
           </div>
 
-          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6 transition-all duration-700 delay-100 ease-out transform ${
+          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-2 sm:my-6 transition-all duration-700 delay-100 ease-out transform ${
                 isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-95'
               }`}>
-                <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
-                <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
-              </div>
-
-
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-fuchsia-500 -mt-[4px] sm:-mt-[5px] z-10" />
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-fuchsia-500 -mt-[4px] sm:-mt-[5px] z-10" />
+          </div>
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
-        <div className={`max-w-7xl mx-auto w-full z-20 mt-6 sm:mt-8 lg:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
+        <div className={`max-w-7xl mx-auto w-full z-20 mt-2 sm:mt-8 lg:my-auto transition-all duration-700 ease-out transform delay-[450ms] ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}>
 
@@ -208,12 +219,12 @@ export default function Project() {
 
               if (diff < 0) {
                 const clampedDiff = Math.max(-1, diff);
-                translateY = clampedDiff * 180;
+                translateY = clampedDiff * (isMobile ? 130 : 180);
                 scale = 1 + clampedDiff * 0.05;
                 opacity = Math.max(0, 1 + clampedDiff);
               } else {
                 const clampedDiff = Math.min(2, diff);
-                translateY = clampedDiff * 16;
+                translateY = clampedDiff * (isMobile ? 12 : 16);
                 scale = 1 - clampedDiff * 0.04;
                 opacity = 1 - clampedDiff * 0.15;
               }
@@ -223,47 +234,48 @@ export default function Project() {
               return (
                 <div
                   key={project.id}
-                  className="col-start-1 row-start-1 w-full h-auto bg-zinc-900/95 border border-zinc-800 rounded-2xl rounded-tl-none p-4 sm:p-6 lg:p-8 backdrop-blur-xl shadow-2xl origin-top"
+                  className="col-start-1 row-start-1 w-full h-auto bg-zinc-900/95 border border-zinc-800 rounded-2xl rounded-tl-none p-3.5 xs:p-4 sm:p-6 lg:p-8 backdrop-blur-xl shadow-2xl origin-top will-change-transform transform-gpu"
                   style={{
                     transform: `translateY(${translateY}px) scale(${scale})`,
                     opacity: opacity,
                     zIndex: projects.length - index,
                     pointerEvents: isCurrentActive ? 'auto' : 'none',
-                    transition:
-                      'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transition: isMobile
+                      ? 'transform 0.25s ease-out, opacity 0.25s ease-out, scale 0.25s ease-out'
+                      : 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), scale 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-start lg:items-center justify-between">
+                  <div className="flex flex-col lg:flex-row gap-2.5 sm:gap-3 lg:gap-8 items-start lg:items-center justify-between">
 
                     {/* GAMBAR */}
                     <div className="w-full lg:w-1/2 flex justify-center items-center shrink-0">
-                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-40 xs:h-44 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
+                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-36 xs:h-40 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
                         <img
                           src={project.image}
                           alt={project.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-x-0 bottom-0 h-10 sm:h-16 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute inset-x-0 bottom-0 h-8 sm:h-16 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </div>
 
                     {/* TEKS */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-between">
                       <div>
-                        <span className="text-[10px] sm:text-[11px] font-mono font-medium tracking-widest text-zinc-500 uppercase">
+                        <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-medium tracking-widest text-zinc-500 uppercase">
                           {project.date}
                         </span>
 
-                        <h3 className="text-base xs:text-lg sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1.5 sm:mb-2 tracking-tight">
+                        <h3 className="text-sm xs:text-base sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1 sm:mb-2 tracking-tight">
                           {project.title}
                         </h3>
 
                         {/* STACK ICONS */}
-                        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
                           {project.stacks.map((iconPath, i) => (
                             <div
                               key={i}
-                              className="w-6 h-6 sm:w-8 sm:h-8 p-1 sm:p-1.5 bg-zinc-950 rounded-lg sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
+                              className="w-5 h-5 sm:w-8 sm:h-8 p-0.5 sm:p-1.5 bg-zinc-950 rounded-md sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
                             >
                               <img
                                 src={iconPath}
@@ -274,20 +286,20 @@ export default function Project() {
                           ))}
                         </div>
 
-                        <p className="text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-relaxed font-normal">
+                        <p className="text-[10px] xs:text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-snug sm:leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
                           {project.description}
                         </p>
                       </div>
 
                       {/* MORE DETAIL LINK */}
-                      <div className="pt-2 sm:pt-3">
+                      <div className="pt-1.5 sm:pt-3">
                         <a
                           href={`#project-${project.id}`}
-                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-fuchsia-400 transition-colors group cursor-pointer"
+                          className="inline-flex items-center gap-1.5 text-[11px] sm:text-sm font-semibold text-white hover:text-fuchsia-400 transition-colors group cursor-pointer"
                         >
                           <span>More Detail</span>
                           <svg
-                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1"
+                            className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -305,8 +317,8 @@ export default function Project() {
           </div>
 
           {/* SCROLL INDICATOR FOOTER */}
-          <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 mt-3 sm:mt-4 py-0.5">
-            Scroll down/up to navigate projects ({activeIndex + 1}/{projects.length})
+          <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 mt-2 sm:mt-4 py-0.5">
+            Scroll / swipe to navigate projects ({activeIndex + 1}/{projects.length})
           </div>
 
         </div>
@@ -314,4 +326,4 @@ export default function Project() {
       </div>
     </section>
   );
-}
+}
