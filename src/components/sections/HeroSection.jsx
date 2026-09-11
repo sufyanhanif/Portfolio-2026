@@ -43,7 +43,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className={`relative flex flex-col items-center justify-between min-h-screen w-full select-none px-2 sm:px-6 pt-20 sm:pt-24 pb-6 sm:pb-10 overflow-hidden bg-[#0a0a0a] transition-all duration-1000 ease-out ${
+      className={`relative flex flex-col items-center justify-between min-h-[90vh] sm:min-h-screen w-full select-none px-2 sm:px-6 pt-16 sm:pt-24 pb-4 sm:pb-10 overflow-hidden bg-[#0a0a0a] transition-all duration-1000 ease-out ${
         isLoaded ? 'animate-page-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >

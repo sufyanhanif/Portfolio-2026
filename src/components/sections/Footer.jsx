@@ -38,7 +38,7 @@ export default function Footer() {
     <footer
       ref={sectionRef}
       id="contact"
-      className="relative w-full bg-black text-white px-4 sm:px-8 md:px-12 pt-16 sm:pt-24 pb-12 overflow-hidden"
+      className="relative w-full bg-black text-white px-4 sm:px-8 md:px-12 pt-10 sm:pt-24 pb-8 overflow-hidden"
     >
       {/* Ambient Glow Ungu Bergerak Atas-Bawah (Animated Floating Background Glow) */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-80 bg-gradient-to-t from-[#8b0099]/35 via-[#6b0870]/25 to-transparent blur-[130px] rounded-full pointer-events-none z-0 animate-glow-up-down" />

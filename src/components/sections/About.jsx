@@ -174,7 +174,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about-me"
-      className="relative w-full min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 flex items-center justify-center overflow-hidden pt-24 lg:pt-16 pb-12"
+      className="relative w-full min-h-fit lg:min-h-screen bg-black text-white px-4 sm:px-8 md:px-12 flex items-center justify-center overflow-hidden pt-12 sm:pt-20 lg:pt-16 pb-8 sm:pb-12"
     >
       {/* GLOW UNGU */}
       <div 
