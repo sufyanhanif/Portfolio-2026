@@ -74,6 +74,41 @@ export default function Project() {
     return () => observer.disconnect();
   }, []);
 
+  const touchStartY = useRef(0);
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!isMobile) return;
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchEndX = e.changedTouches[0].clientX;
+
+    const deltaY = touchStartY.current - touchEndY;
+    const deltaX = touchStartX.current - touchEndX;
+
+    // Detect vertical swipe gesture on mobile
+    if (Math.abs(deltaY) > 25 && Math.abs(deltaY) > Math.abs(deltaX)) {
+      const currentIdx = Math.round(steppedIndex);
+      if (deltaY > 0) {
+        // Swipe UP -> Next project card
+        if (currentIdx < projects.length - 1) {
+          const targetIdx = currentIdx + 1;
+          setScrollProgress(targetIdx / (projects.length - 1));
+        }
+      } else {
+        // Swipe DOWN -> Previous project card
+        if (currentIdx > 0) {
+          const targetIdx = currentIdx - 1;
+          setScrollProgress(targetIdx / (projects.length - 1));
+        }
+      }
+    }
+  };
+
   // Scroll Progress Event Listener
   useEffect(() => {
     const mainEl = document.querySelector('main');
@@ -86,25 +121,23 @@ export default function Project() {
       const windowHeight = window.innerHeight;
       const sectionHeight = rect.height - windowHeight;
 
-      let clampedProgress = 0;
-
       if (sectionHeight > 0) {
         // Sticky multi-vh scroll (Desktop / tall height)
         const rawProgress = -rect.top / sectionHeight;
-        clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+        const clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+        setScrollProgress(clampedProgress);
       } else {
-        // Natural viewport scroll (Mobile with compact height like h-[50vh])
+        // Viewport travel scroll (Mobile with compact height like h-[50vh])
         const startOffset = windowHeight * 0.75;
         const endOffset = -rect.height * 0.25;
         const totalTravel = startOffset - endOffset;
 
         if (totalTravel > 0) {
           const rawProgress = (startOffset - rect.top) / totalTravel;
-          clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+          const clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+          setScrollProgress(clampedProgress);
         }
       }
-
-      setScrollProgress(clampedProgress);
     };
 
     target.addEventListener('scroll', handleScroll, { passive: true });
@@ -142,30 +175,18 @@ export default function Project() {
   const activeIndex = Math.round(steppedIndex);
 
   const handleTabClick = (index) => {
+    setScrollProgress(index / (projects.length - 1));
+
     if (!sectionRef.current) return;
     const mainEl = document.querySelector('main');
     const sectionTop = sectionRef.current.offsetTop;
     const windowHeight = window.innerHeight;
     const sectionHeight = sectionRef.current.clientHeight - windowHeight;
 
-    let targetScroll = 0;
     if (sectionHeight > 0) {
-      targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
-    } else {
-      const startOffset = windowHeight * 0.75;
-      const endOffset = -sectionRef.current.clientHeight * 0.25;
-      const totalTravel = startOffset - endOffset;
-      const targetProgress = index / (projects.length - 1);
-      targetScroll = sectionTop - startOffset + targetProgress * totalTravel;
-    }
-
-    if (mainEl) {
-      mainEl.scrollTo({
-        top: Math.max(0, targetScroll),
-        behavior: 'smooth',
-      });
-    } else {
-      window.scrollTo({
+      const targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
+      const targetEl = mainEl || window;
+      targetEl.scrollTo({
         top: Math.max(0, targetScroll),
         behavior: 'smooth',
       });
@@ -235,7 +256,11 @@ export default function Project() {
           </div>
 
           {/* CARDS STACK CONTAINER */}
-          <div className="grid grid-cols-1 w-full relative">
+          <div 
+            onTouchStart={handleTouchStart} 
+            onTouchEnd={handleTouchEnd}
+            className="grid grid-cols-1 w-full relative touch-pan-y"
+          >
             {projects.map((project, index) => {
               const diff = index - steppedIndex;
 
