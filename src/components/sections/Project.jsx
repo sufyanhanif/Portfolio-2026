@@ -137,7 +137,7 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[200vh] sm:h-[280vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[165vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
       <div className="sticky top-0 w-full h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-12 sm:pt-20 pb-3 md:pb-6 overflow-hidden">
@@ -304,8 +304,8 @@ export default function Project() {
             })}
           </div>
 
-          {/* SCROLL INDICATOR FOOTER (Ditambah mt-8 di Mobile agar berjarak longgar) */}
-          <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 mt-8 sm:mt-4 py-0.5">
+          {/* SCROLL INDICATOR FOOTER */}
+          <div className="text-center z-10 text-[9px] sm:text-[10px] font-mono text-zinc-500 mt-3 sm:mt-4 py-0.5">
             Scroll down/up to navigate projects ({activeIndex + 1}/{projects.length})
           </div>
 
