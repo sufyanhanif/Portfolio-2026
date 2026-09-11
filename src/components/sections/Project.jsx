@@ -105,9 +105,9 @@ export default function Project() {
     const floorX = Math.floor(x);
     const fracX = x - floorX;
 
-    // Mobile uses a narrower transition window (0.1 to 0.45) for fast, responsive snapping on scroll swipe
-    const transitionStart = isMobile ? 0.1 : 0.25;
-    const transitionEnd = isMobile ? 0.45 : 0.75;
+    // Mobile uses a responsive transition window (0.05 to 0.40) for immediate card snapping
+    const transitionStart = isMobile ? 0.05 : 0.25;
+    const transitionEnd = isMobile ? 0.40 : 0.75;
 
     let mappedFrac = 0;
     if (fracX < transitionStart) {
@@ -150,7 +150,7 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[30vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[80h] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
       <div className="sticky top-2 sm:top-0 w-full h-[88vh] xs:h-[90vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-3 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
@@ -219,12 +219,12 @@ export default function Project() {
 
               if (diff < 0) {
                 const clampedDiff = Math.max(-1, diff);
-                translateY = clampedDiff * (isMobile ? 130 : 180);
+                translateY = clampedDiff * (isMobile ? 50 : 180);
                 scale = 1 + clampedDiff * 0.05;
                 opacity = Math.max(0, 1 + clampedDiff);
               } else {
                 const clampedDiff = Math.min(2, diff);
-                translateY = clampedDiff * (isMobile ? 12 : 16);
+                translateY = clampedDiff * (isMobile ? 5 : 16);
                 scale = 1 - clampedDiff * 0.04;
                 opacity = 1 - clampedDiff * 0.15;
               }
