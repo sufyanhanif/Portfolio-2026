@@ -137,10 +137,10 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[140vh] sm:h-[240vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[125vh] sm:h-[240vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-12 sm:pt-20 pb-3 md:pb-6 overflow-hidden">
+      <div className="sticky top-0 w-full h-[92vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-10 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
 
         {/* Ambient Purple Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-fuchsia-900/20 blur-[140px] rounded-full pointer-events-none z-0" />
