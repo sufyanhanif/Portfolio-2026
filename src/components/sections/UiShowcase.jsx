@@ -48,7 +48,7 @@ export default function UiShowcase() {
     <section
       ref={sectionRef}
       id="ui-showcase"
-      className="relative w-full pt-2 sm:pt-16 pb-12 sm:pb-24 bg-black text-white overflow-hidden"
+      className="relative w-full pt-0 sm:pt-16 pb-12 sm:pb-24 bg-black text-white overflow-hidden"
     >
       {/* Ambient Purple Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-fuchsia-950/20 blur-[150px] rounded-full pointer-events-none z-0" />
