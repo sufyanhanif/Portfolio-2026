@@ -138,13 +138,17 @@
   will-change: transform, opacity;
 }
 
-/* --- PENAMBAHAN: Class Marquee Global --- */
+/* --- PENAMBAHAN: Class Marquee Global (GPU Accelerated) --- */
 .animate-marquee {
-  animation: marquee 22s linear infinite;
+  animation: marquee 26s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .animate-marquee-reverse {
-  animation: marquee-reverse 22s linear infinite;
+  animation: marquee-reverse 26s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* 3. Pengaturan Smooth Scroll & Offset Navbar Header */

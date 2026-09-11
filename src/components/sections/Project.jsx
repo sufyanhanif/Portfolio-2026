@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 export default function Project() {
-  const [activeCategory, setActiveCategory] = useState('Website');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-
-  const categories = ['Website', 'UI/UX Designer', 'Other'];
 
   const projects = [
     {
@@ -161,32 +158,14 @@ export default function Project() {
             </p>
           </div>
 
-          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6 transition-all duration-700 ease-out transform delay-[150ms] ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}>
-            <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
-            <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
-          </div>
+          <div className={`relative w-full border-t border-dashed border-zinc-700 flex justify-between items-center my-4 sm:my-6 transition-all duration-700 delay-100 ease-out transform ${
+                isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-95'
+              }`}>
+                <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
+                <span className="w-2.5 h-2.5 bg-fuchsia-500 -mt-[5px] z-10" />
+              </div>
 
-          <div className={`flex justify-center my-6 sm:my-8 transition-all duration-700 ease-out transform delay-[300ms] ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}>
-            <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-zinc-900/90 border border-zinc-800 rounded-full backdrop-blur-md shadow-lg">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-300 cursor-pointer ${
-                    activeCategory === cat
-                      ? 'bg-fuchsia-600 text-white shadow-lg shadow-fuchsia-600/30'
-                      : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* --- CARDS & FOLDER TABS CONTAINER --- */}
