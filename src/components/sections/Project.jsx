@@ -150,7 +150,7 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[30vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[10vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
       <div className="sticky top-2 sm:top-0 w-full h-[88vh] xs:h-[90vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-3 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
