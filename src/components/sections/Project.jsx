@@ -117,7 +117,7 @@ export default function Project() {
     if (!sectionRef.current) return;
     const mainEl = document.querySelector('main');
     const sectionTop = sectionRef.current.offsetTop;
-    const sectionHeight = sectionRef.current.clientHeight - window.innerHeight;
+    const sectionHeight = Math.max(sectionRef.current.clientHeight - window.innerHeight, 1);
     const targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
 
     if (mainEl) {
@@ -137,7 +137,7 @@ export default function Project() {
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[30vh] sm:h-[240vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[160vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
       <div className="sticky top-0 w-full h-[92vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-10 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
