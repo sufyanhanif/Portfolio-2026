@@ -128,8 +128,8 @@ export default function Project() {
         setScrollProgress(clampedProgress);
       } else {
         // Viewport travel scroll (Mobile with compact height like h-[50vh])
-        const startOffset = windowHeight * 0.75;
-        const endOffset = -rect.height * 0.25;
+        const startOffset = windowHeight * 0.85;
+        const endOffset = -rect.height * 0.45;
         const totalTravel = startOffset - endOffset;
 
         if (totalTravel > 0) {
@@ -154,8 +154,8 @@ export default function Project() {
     const fracX = x - floorX;
 
     // Mobile uses a responsive transition window (0.10 to 0.40) for immediate card snapping
-    const transitionStart = isMobile ? 0.10 : 0.25;
-    const transitionEnd = isMobile ? 0.40 : 0.75;
+    const transitionStart = 0.25;
+    const transitionEnd = 0.75;
 
     let mappedFrac = 0;
     if (fracX < transitionStart) {
@@ -175,29 +175,25 @@ export default function Project() {
   const activeIndex = Math.round(steppedIndex);
 
   const handleTabClick = (index) => {
-    setScrollProgress(index / (projects.length - 1));
-
     if (!sectionRef.current) return;
     const mainEl = document.querySelector('main');
     const sectionTop = sectionRef.current.offsetTop;
     const windowHeight = window.innerHeight;
-    const sectionHeight = sectionRef.current.clientHeight - windowHeight;
+    const sectionHeight = Math.max(sectionRef.current.clientHeight - windowHeight, 1);
 
-    if (sectionHeight > 0) {
-      const targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
-      const targetEl = mainEl || window;
-      targetEl.scrollTo({
-        top: Math.max(0, targetScroll),
-        behavior: 'smooth',
-      });
-    }
+    const targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
+    const targetEl = mainEl || window;
+    targetEl.scrollTo({
+      top: Math.max(0, targetScroll),
+      behavior: 'smooth',
+    });
   };
 
   return (
     <section
       ref={sectionRef}
       id="my-project"
-      className="relative w-full h-[50vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
+      className="relative w-full h-[123vh] sm:h-[250vh] lg:h-[350vh] bg-black text-white"
     >
       {/* Sticky Screen Box */}
       <div className="sticky top-2 sm:top-0 w-full h-[88vh] xs:h-[90vh] sm:h-screen flex flex-col justify-start lg:justify-between px-3 sm:px-8 md:px-12 pt-3 sm:pt-20 pb-2 md:pb-6 overflow-hidden">
@@ -270,12 +266,12 @@ export default function Project() {
 
               if (diff < 0) {
                 const clampedDiff = Math.max(-1, diff);
-                translateY = clampedDiff * (isMobile ? 50 : 180);
+                translateY = clampedDiff * (isMobile ? 160 : 180);
                 scale = 1 + clampedDiff * 0.05;
                 opacity = Math.max(0, 1 + clampedDiff);
               } else {
                 const clampedDiff = Math.min(2, diff);
-                translateY = clampedDiff * (isMobile ? 5 : 16);
+                translateY = clampedDiff * (isMobile ? 12 : 16);
                 scale = 1 - clampedDiff * 0.04;
                 opacity = 1 - clampedDiff * 0.15;
               }
@@ -300,7 +296,7 @@ export default function Project() {
 
                     {/* GAMBAR */}
                     <div className="w-full lg:w-1/2 flex justify-center items-center shrink-0">
-                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-36 xs:h-40 sm:h-48 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
+                      <div className="relative w-full max-w-full sm:max-w-[360px] lg:max-w-[380px] h-120 xs:h-48 sm:h-52 lg:h-auto lg:aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800 shadow-xl group">
                         <img
                           src={project.image}
                           alt={project.title}
@@ -317,7 +313,7 @@ export default function Project() {
                           {project.date}
                         </span>
 
-                        <h3 className="text-sm xs:text-base sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1 sm:mb-2 tracking-tight">
+                        <h3 className="text-2xl xs:text-base sm:text-2xl lg:text-3xl font-extrabold text-white mt-0.5 mb-1 sm:mb-2 tracking-tight">
                           {project.title}
                         </h3>
 
@@ -326,7 +322,7 @@ export default function Project() {
                           {project.stacks.map((iconPath, i) => (
                             <div
                               key={i}
-                              className="w-5 h-5 sm:w-8 sm:h-8 p-0.5 sm:p-1.5 bg-zinc-950 rounded-md sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
+                              className="w-6 h-6 sm:w-8 sm:h-8 p-0.5 sm:p-1.5 bg-zinc-950 rounded-md sm:rounded-xl border border-zinc-800 flex items-center justify-center shadow-inner"
                             >
                               <img
                                 src={iconPath}
@@ -337,7 +333,7 @@ export default function Project() {
                           ))}
                         </div>
 
-                        <p className="text-[10px] xs:text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-snug sm:leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
+                        <p className="text-[12px] xs:text-[11px] sm:text-xs lg:text-sm text-zinc-400 leading-snug sm:leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
                           {project.description}
                         </p>
                       </div>
