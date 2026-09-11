@@ -83,13 +83,28 @@ export default function Project() {
       if (!sectionRef.current) return;
 
       const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = rect.height - window.innerHeight;
+      const windowHeight = window.innerHeight;
+      const sectionHeight = rect.height - windowHeight;
+
+      let clampedProgress = 0;
 
       if (sectionHeight > 0) {
+        // Sticky multi-vh scroll (Desktop / tall height)
         const rawProgress = -rect.top / sectionHeight;
-        const clampedProgress = Math.max(0, Math.min(rawProgress, 1));
-        setScrollProgress(clampedProgress);
+        clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+      } else {
+        // Natural viewport scroll (Mobile with compact height like h-[50vh])
+        const startOffset = windowHeight * 0.75;
+        const endOffset = -rect.height * 0.25;
+        const totalTravel = startOffset - endOffset;
+
+        if (totalTravel > 0) {
+          const rawProgress = (startOffset - rect.top) / totalTravel;
+          clampedProgress = Math.max(0, Math.min(rawProgress, 1));
+        }
       }
+
+      setScrollProgress(clampedProgress);
     };
 
     target.addEventListener('scroll', handleScroll, { passive: true });
@@ -105,7 +120,7 @@ export default function Project() {
     const floorX = Math.floor(x);
     const fracX = x - floorX;
 
-    // Mobile uses a responsive transition window (0.05 to 0.40) for immediate card snapping
+    // Mobile uses a responsive transition window (0.10 to 0.40) for immediate card snapping
     const transitionStart = isMobile ? 0.10 : 0.25;
     const transitionEnd = isMobile ? 0.40 : 0.75;
 
@@ -130,17 +145,28 @@ export default function Project() {
     if (!sectionRef.current) return;
     const mainEl = document.querySelector('main');
     const sectionTop = sectionRef.current.offsetTop;
-    const sectionHeight = Math.max(sectionRef.current.clientHeight - window.innerHeight, 1);
-    const targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
+    const windowHeight = window.innerHeight;
+    const sectionHeight = sectionRef.current.clientHeight - windowHeight;
+
+    let targetScroll = 0;
+    if (sectionHeight > 0) {
+      targetScroll = sectionTop + (index / (projects.length - 1)) * sectionHeight;
+    } else {
+      const startOffset = windowHeight * 0.75;
+      const endOffset = -sectionRef.current.clientHeight * 0.25;
+      const totalTravel = startOffset - endOffset;
+      const targetProgress = index / (projects.length - 1);
+      targetScroll = sectionTop - startOffset + targetProgress * totalTravel;
+    }
 
     if (mainEl) {
       mainEl.scrollTo({
-        top: targetScroll,
+        top: Math.max(0, targetScroll),
         behavior: 'smooth',
       });
     } else {
       window.scrollTo({
-        top: targetScroll,
+        top: Math.max(0, targetScroll),
         behavior: 'smooth',
       });
     }
