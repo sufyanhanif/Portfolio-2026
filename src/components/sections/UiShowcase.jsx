@@ -28,16 +28,16 @@ export default function UiShowcase() {
 
   // Frame 1-3 untuk Atas (Top Row)
   const topFrames = [
-    '/images/ui/frame1.svg',
-    '/images/ui/frame2.svg',
-    '/images/ui/frame3.svg',
+    '/images/ui/frame1.png',
+    '/images/ui/frame2.png',
+    '/images/ui/frame3.png',
   ];
 
   // Frame 4-6 untuk Bawah (Bottom Row)
   const bottomFrames = [
-    '/images/ui/frame4.svg',
-    '/images/ui/frame5.svg',
-    '/images/ui/frame6.svg',
+    '/images/ui/frame4.png',
+    '/images/ui/frame5.png',
+    '/images/ui/frame6.png',
   ];
 
   // Track menyambung tanpa henti (2x duplikasi untuk efisiensi performa)
@@ -77,7 +77,7 @@ export default function UiShowcase() {
                   src={imgSrc}
                   alt={`UI Design Frame Top ${idx + 1}`}
                   className="w-full h-full object-contain bg-black"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                 />
               </div>
@@ -102,7 +102,7 @@ export default function UiShowcase() {
                   src={imgSrc}
                   alt={`UI Design Frame Bottom ${idx + 1}`}
                   className="w-full h-full object-contain bg-black"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                 />
               </div>
