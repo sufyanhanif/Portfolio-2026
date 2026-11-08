@@ -8,8 +8,79 @@ import About from '../components/sections/About.jsx';
 import Project from '../components/sections/Project.jsx';
 import UiShowcase from '../components/sections/UiShowcase.jsx';
 import Certificate from '../components/sections/Certificate.jsx';
+import GithubActivity from '../components/sections/GithubActivity.jsx';
 import Footer from '../components/sections/Footer.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';
+
+const LEVEL_MAP: Record<string, number> = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
+
+function mapCalendar(collection: any) {
+  const weeks = collection?.contributionCalendar?.weeks ?? [];
+  return weeks.flatMap((week: any) =>
+    week.contributionDays.map((day: any) => ({
+      date: day.date,
+      count: day.contributionCount,
+      level: LEVEL_MAP[day.contributionLevel] ?? 0,
+    }))
+  );
+}
+
+let contributionsByYear = null;
+const githubToken = import.meta.env.GITHUB_TOKEN;
+
+if (githubToken) {
+  try {
+    const query = `
+      fragment CalendarFields on ContributionsCollection {
+        contributionCalendar {
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+              contributionLevel
+            }
+          }
+        }
+      }
+      query {
+        viewer {
+          last: contributionsCollection { ...CalendarFields }
+          y2026: contributionsCollection(from: "2026-01-01T00:00:00Z", to: "2026-12-31T23:59:59Z") { ...CalendarFields }
+          y2025: contributionsCollection(from: "2025-01-01T00:00:00Z", to: "2025-12-31T23:59:59Z") { ...CalendarFields }
+          y2024: contributionsCollection(from: "2024-01-01T00:00:00Z", to: "2024-12-31T23:59:59Z") { ...CalendarFields }
+        }
+      }
+    `;
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${githubToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
+    if (res.ok) {
+      const json = await res.json();
+      const viewer = json?.data?.viewer;
+      if (viewer) {
+        contributionsByYear = {
+          last: mapCalendar(viewer.last),
+          2026: mapCalendar(viewer.y2026),
+          2025: mapCalendar(viewer.y2025),
+          2024: mapCalendar(viewer.y2024),
+        };
+      }
+    }
+  } catch {
+    contributionsByYear = null;
+  }
+}
 ---
 
 <Layout>
@@ -21,6 +92,7 @@ import LoadingScreen from '../components/common/LoadingScreen.jsx';
     <Project client:load />
     <UiShowcase client:load />
     <Certificate client:load />
+    <GithubActivity client:load contributionsByYear={contributionsByYear} />
     <Footer client:load />
   </main>
 </Layout>
